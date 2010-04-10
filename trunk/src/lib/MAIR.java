@@ -1,4 +1,21 @@
+/***************************************************************************
+ *   Copyright (C) 2010 by                                                 *
+ *   	Matej Jakop <matej@jakop.si>                                       *
+ *      Gregor Kališnik <gregor@unimatrix-one.org>                         *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License version 3        *
+ *   as published by the Free Software Foundation.                         *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ ***************************************************************************/
+
 package lib;
+
+import java.util.ArrayList;
 
 public class MAIR implements Runnable {
 
@@ -9,6 +26,16 @@ public class MAIR implements Runnable {
 	private short mode = MODE_NORMAL;
 	private MAIRInput input;
 	private MAIRInputMessageListener inputMessageListener;
+	private MAIRDispacher dispatcher=new MAIRDispacher();
+	private ArrayList<MAIRFilter> filters=new ArrayList<MAIRFilter>();
+	
+	public MAIR() {
+		filters.add(new MAIRFilterThreshold(10));
+	}
+	
+	public boolean loadGesturesFromFile(String fileName){
+		return false;
+	}
 
 	public void setInput(MAIRInput input) {
 		this.input = input;
@@ -55,16 +82,46 @@ public class MAIR implements Runnable {
 	}
 
 	public void run() {
-		while (doWork) {
-			MAIRInputMessage msg = input.get();
-			// 1. filter for message, to check if we ignore this message or
-			// process it.
-			// send to dispacher
-			try {
-				Thread.sleep(1000);
-			} catch (Exception e) {
-
+		try {
+			input.prepare();
+			while(doWork){
+				input.connect();
+				while (doWork) {
+					MAIRInputMessage msg = input.get();
+					if (msg==null){
+						//device has been disconnected
+						System.out.println("Naprava se je odklopila.");
+						doWork=false;
+						break;
+					}
+					//inform listener about new message
+					if (inputMessageListener!=null){
+						inputMessageListener.messageReceived(msg);
+					}
+					//send message to all filters
+					if (msg.isIgnoreFilters()==false){
+						int n_filters=filters.size();
+						for(int i=0;i<n_filters;i++){
+							MAIRFilter filter=filters.get(i);
+							msg=filter.process(msg);
+							if(msg==null){
+								break;
+							}
+						}
+						//if we filtered out message then continue with the loop
+						if (msg==null){
+							continue;
+						}
+					}
+					//now process
+					dispatcher.dispatch(msg);
+				}
+				input.disconnect();
 			}
+			input.cleanup();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 }

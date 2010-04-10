@@ -15,17 +15,30 @@
 
 package lib;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-public abstract class MAIRInput extends MAIRObject {
+public class MAIRFilterThreshold extends MAIRFilter{
 	
-	public abstract MAIRInputMessage get() throws IOException ;
-	public abstract boolean prepare() throws MAIRExceptionPrepare;
-	public abstract boolean connect() throws IOException;
-	public abstract boolean disconnect() throws IOException;
-	public abstract boolean cleanup();
-	public abstract InputStream getInputStream() throws IOException;
-	public abstract OutputStream getOutputStream() throws IOException;
+	private int lowerLimit;
+	private int upperLimit;
+	
+	public MAIRFilterThreshold(int lowerLimit) {
+		this.lowerLimit=lowerLimit;
+		this.upperLimit=Integer.MAX_VALUE;
+	}
+	
+	public MAIRFilterThreshold(int lowerLimit, int upperLimit) {
+		this.lowerLimit=lowerLimit;
+		this.upperLimit=upperLimit;
+	}
+	
+	@Override
+	public MAIRInputMessage process(MAIRInputMessage msg) {
+		if (msg instanceof MAIRInputMessageMouse){
+			MAIRInputMessageMouse mMSG=(MAIRInputMessageMouse)msg;
+			double size=mMSG.getSizeOfVector();
+			if (size < lowerLimit || size >upperLimit){
+				return null;
+			}
+		}
+		return msg;
+	}
 }

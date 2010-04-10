@@ -15,17 +15,32 @@
 
 package lib;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+public class MAIRAverageQue {
 
-public abstract class MAIRInput extends MAIRObject {
+	private double[] que;
+	private int size=0;
+	private int putPosition=0;
 	
-	public abstract MAIRInputMessage get() throws IOException ;
-	public abstract boolean prepare() throws MAIRExceptionPrepare;
-	public abstract boolean connect() throws IOException;
-	public abstract boolean disconnect() throws IOException;
-	public abstract boolean cleanup();
-	public abstract InputStream getInputStream() throws IOException;
-	public abstract OutputStream getOutputStream() throws IOException;
+	public MAIRAverageQue(int size) {
+		que=new double[size];
+	}
+	
+	public void put(double value){
+		if (size < que.length){
+			size++;
+		} else if (putPosition >= que.length){
+			putPosition=0;
+		}
+		que[putPosition]=value;
+		putPosition++;
+	}
+	
+	public double getAverage(){
+		double sum=0.0;
+		for(int i=0;i<size;i++){
+			sum+=que[i];
+		}
+		double avg=sum/que.length;
+		return avg;
+	}
 }

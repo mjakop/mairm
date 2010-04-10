@@ -15,17 +15,6 @@
 
 package lib;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-public abstract class MAIRInput extends MAIRObject {
-	
-	public abstract MAIRInputMessage get() throws IOException ;
-	public abstract boolean prepare() throws MAIRExceptionPrepare;
-	public abstract boolean connect() throws IOException;
-	public abstract boolean disconnect() throws IOException;
-	public abstract boolean cleanup();
-	public abstract InputStream getInputStream() throws IOException;
-	public abstract OutputStream getOutputStream() throws IOException;
+public class MAIRExceptionPrepare extends MAIRException {
+	private static final long serialVersionUID = 1L;
 }
