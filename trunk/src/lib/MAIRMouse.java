@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2010 by                                                 *
  *   	Matej Jakop <matej@jakop.si>                                       *
- *      Gregor Kali≈°nik <gregor@unimatrix-one.org>                         *
+ *      Gregor Kaliönik <gregor@unimatrix-one.org>                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License version 3        *
@@ -24,8 +24,8 @@ import lib.MAIRInputMessageMouse.ButtonStatus;
 public class MAIRMouse extends MAIRObject {
 	
 	private Robot robot;
-	private MAIRAverageQue avgX=new MAIRAverageQue(20);
-	private MAIRAverageQue avgY=new MAIRAverageQue(20);
+	private MAIRAverageQue avgX=new MAIRAverageQue(10);
+	private MAIRAverageQue avgY=new MAIRAverageQue(10);
 	
 	private Robot getRobot() {
 		if (robot==null){
@@ -96,17 +96,17 @@ public class MAIRMouse extends MAIRObject {
 		int dirX; //-1 forward, 1 backward
 		int dirY; //-1 left, 1 right
 		//calculate direction
-		if (msg.getAccZ() < 0){
+		if (msg.getAccY() < 0){
 			dirX=1;
 		} else {
 			dirX=-1;
 		}
 		if (msg.getAccX() < 0){
-			dirY=1;
-		} else {
 			dirY=-1;
+		} else {
+			dirY=1;
 		}
-		dx=getValueIfGratherThan(Math.abs(msg.getAccZ()),10,0);
+		dx=getValueIfGratherThan(Math.abs(msg.getAccY()),10,0);
 		dy=getValueIfGratherThan(Math.abs(msg.getAccX()),10,0);
 		//make more accurate when phone is not to much tilt.
 		double factorChangeX=1.0;
@@ -123,14 +123,14 @@ public class MAIRMouse extends MAIRObject {
 		if(dy > 0 && dy < 50){
 			factorChangeY=dy/50.0;
 		}
-		dx*=factorChangeX;
-		dy*=factorChangeY;
+		dx*=factorChangeX*dirX;
+		dy*=factorChangeY*dirY;
 		//average value with last values for smoother movement
 		avgX.put(dx);
 		avgY.put(dy);
 		dx=avgX.getAverage();
 		dy=avgY.getAverage();
-		moveMouse(dx*dirX, dy*dirY);
+		moveMouse(dx, dy);
 	}
 	
 	public void process(MAIRInputMessageMouse msg){
