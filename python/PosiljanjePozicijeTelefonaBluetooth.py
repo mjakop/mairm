@@ -23,7 +23,7 @@ def bt_povezi():
 
 def sensor_event(data):
 	global sock
-	text=""+str(data["data_1"]/4)+";"+str(data["data_2"]/4)+";"+str(data["data_2"]/4)+";\n\r"
+	text=""+str(data["data_1"]/4)+";"+str(data["data_2"]/4)+";"+str(data["data_3"]/4)+";\n\r"
 	sock.send(text)
 
 def keypress(event):
