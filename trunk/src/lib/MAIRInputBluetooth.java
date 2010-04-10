@@ -37,7 +37,6 @@ public class MAIRInputBluetooth extends MAIRInput {
 	private InputStream inputStream;
 	private OutputStream outputStream;
 	private BufferedReader bufferedReader;
-	private int maxValue=0;
 	
 	public MAIRInputBluetooth(String serviceName) {
 		this.serviceName=serviceName;
@@ -109,6 +108,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 	
 	@Override
 	public MAIRInputMessage get()  throws IOException {
+		//TODO: Change to JSON format.
 		String line=getBufferedReader().readLine();
 		if (line==null){
 			return null;

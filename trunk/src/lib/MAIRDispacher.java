@@ -22,7 +22,6 @@ public class MAIRDispacher {
 
 	//detect what is might be based on input
 	//and send to correct class....
-	
 	public void dispatch(MAIRInputMessage msg){
 		if (msg instanceof MAIRInputMessageKeyboard){
 			System.out.println("Ukaz tipkovnice");
