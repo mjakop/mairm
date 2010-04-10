@@ -25,6 +25,7 @@ public class MAIR implements Runnable {
 	private boolean doWork = false;
 	private short mode = MODE_NORMAL;
 	private MAIRInput input;
+	private MAIREventListener eventListener;
 	private MAIRInputMessageListener inputMessageListener;
 	private MAIRDispacher dispatcher=new MAIRDispacher();
 	private ArrayList<MAIRFilter> filters=new ArrayList<MAIRFilter>();
@@ -47,6 +48,14 @@ public class MAIR implements Runnable {
 	 */
 	public void setInputMessageListener(MAIRInputMessageListener listener) {
 		this.inputMessageListener = listener;
+	}
+	
+	public void setEventListener(MAIREventListener eventListener) {
+		this.eventListener = eventListener;
+	}
+	
+	public MAIREventListener getEventListener() {
+		return eventListener;
 	}
 
 	private void checkSettings() throws Exception {
@@ -86,11 +95,17 @@ public class MAIR implements Runnable {
 			input.prepare();
 			while(doWork){
 				input.connect();
+				//device has been disconnected
+				if (eventListener!=null){
+					eventListener.deviceConnected();
+				}
 				while (doWork) {
 					MAIRInputMessage msg = input.get();
 					if (msg==null){
 						//device has been disconnected
-						System.out.println("Naprava se je odklopila.");
+						if (eventListener!=null){
+							eventListener.deviceDisconnected();
+						}
 						doWork=false;
 						break;
 					}
@@ -120,7 +135,6 @@ public class MAIR implements Runnable {
 			}
 			input.cleanup();
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}

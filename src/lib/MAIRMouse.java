@@ -86,6 +86,8 @@ public class MAIRMouse extends MAIRObject {
 		if (anyUp){
 			getRobot().mouseRelease(flagsUp);
 		}
+		
+		//TODO: Add wheel control.
 	}
 	
 	public void processMove(MAIRInputMessageMouse msg){
