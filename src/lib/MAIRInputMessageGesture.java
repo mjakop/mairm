@@ -15,18 +15,18 @@
 
 package lib;
 
-public class MAIRInputMessageMouse extends MAIRInputMessage {
-
-	public enum ButtonStatus {BUTTON_DOWN, BUTTON_UP, BUTTON_NONE};
+public class MAIRInputMessageGesture extends MAIRInputMessage {
 	
 	private int accX;
 	private int accY;
 	private int accZ;
 	
-	private ButtonStatus leftButtonStatus=ButtonStatus.BUTTON_NONE;
-	private ButtonStatus rightButtonStatus=ButtonStatus.BUTTON_NONE;
+	//true if the message is first of the gesture
+	private boolean startGesture=false;
+	//true if the message is last of the gesture
+	private boolean endGesture=false;
 	
-	public MAIRInputMessageMouse(int x, int y, int z) {
+	public MAIRInputMessageGesture(int x, int y, int z) {
 		accX=x;
 		accY=y;
 		accZ=z;
@@ -56,25 +56,32 @@ public class MAIRInputMessageMouse extends MAIRInputMessage {
 		return accZ;
 	}
 	
+	public boolean isStartGesture() {
+		return startGesture;
+	}
+	
+	public boolean isEndGesture() {
+		return endGesture;
+	}
+	
+	public void setStartGesture(boolean startGesture) {
+		this.startGesture = startGesture;
+	}
+	
+	public void setEndGesture(boolean endGesture) {
+		this.endGesture = endGesture;
+	}
+	
 	public double getSizeOfVector(){
 		double size=Math.sqrt(accX*accX+accY*accY+accZ*accZ);
 		return size;
 	}
 	
-	public ButtonStatus getLeftButtonStatus() {
-		return leftButtonStatus;
+	public double[] featureVector(){
+		double diffXY=getAccX()-getAccY();
+		double diffXZ=getAccX()-getAccZ();
+		double diffYZ=getAccY()-getAccZ();
+		double[] vector={getAccX(),getAccY(),getAccZ(),getSizeOfVector(),diffXY,diffXZ,diffYZ};
+		return vector;
 	}
-	
-	public ButtonStatus getRightButtonStatus() {
-		return rightButtonStatus;
-	}
-	
-	public void setLeftButtonStatus(ButtonStatus leftButtonStatus) {
-		this.leftButtonStatus = leftButtonStatus;
-	}
-	
-	public void setRightButtonStatus(ButtonStatus rightButtonStatus) {
-		this.rightButtonStatus = rightButtonStatus;
-	}
-	
 }

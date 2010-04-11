@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2010 by                                                 *
  *   	Matej Jakop <matej@jakop.si>                                       *
- *      Gregor Kali≈°nik <gregor@unimatrix-one.org>                         *
+ *      Gregor Kaliönik <gregor@unimatrix-one.org>                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License version 3        *
@@ -114,8 +114,30 @@ public class MAIRInputBluetooth extends MAIRInput {
 			return null;
 		} else{
 			//parse data
-			System.out.println(line);
+			line=line.trim();
 			try{
+				MAIRInputMessageGesture gesture;
+				if (line.startsWith("#")==false){
+					String[] parts=line.split(";");
+					int x=Integer.parseInt(parts[0]);
+					int y=Integer.parseInt(parts[1]);
+					int z=Integer.parseInt(parts[2]);
+					gesture=new MAIRInputMessageGesture(x,y,z);
+				} else{
+					gesture=new MAIRInputMessageGesture(0, 0, 0);
+				}
+				if (line.startsWith("#levDOL")){
+					gesture.setStartGesture(true);
+				} else if (line.startsWith("#levGOR")){
+					gesture.setEndGesture(true);				
+				}
+				return gesture;
+			}catch (Exception e) {
+				
+			}
+			/*
+			 MOUSE CONTROL
+			  try{
 				if (line.startsWith("#levDOL")){
 					MAIRInputMessageMouse mouse=new MAIRInputMessageMouse(0,0,0);
 					mouse.setLeftButtonStatus(ButtonStatus.BUTTON_DOWN);
@@ -135,7 +157,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 					return mouse;
 				}
 			}catch (Exception e) {
-			}
+			}*/
 			return new MAIRInputMessage();
 		}
 	}
