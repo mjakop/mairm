@@ -1,7 +1,7 @@
 /***************************************************************************
  *   Copyright (C) 2010 by                                                 *
  *   	Matej Jakop <matej@jakop.si>                                       *
- *      Gregor Kali≈°nik <gregor@unimatrix-one.org>                         *
+ *      Gregor Kaliönik <gregor@unimatrix-one.org>                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License version 3        *
@@ -15,10 +15,13 @@
 
 package lib;
 
+import lib.Gesture.MAIRGesture;
+
 public class MAIRDispacher {
 	
 	private MAIRKeyboard keyboard=new MAIRKeyboard();
 	private MAIRMouse mouse=new MAIRMouse();
+	private MAIRGesture gesture=new MAIRGesture();
 
 	//detect what is might be based on input
 	//and send to correct class....
@@ -27,8 +30,8 @@ public class MAIRDispacher {
 			System.out.println("Ukaz tipkovnice");
 		} else if (msg instanceof MAIRInputMessageMouse){
 			mouse.process((MAIRInputMessageMouse)msg);
-		}else{
-			System.out.println("Unknown type");
+		}else if (msg instanceof MAIRInputMessageGesture){
+			gesture.process((MAIRInputMessageGesture)msg);
 		}
 	}
 }
