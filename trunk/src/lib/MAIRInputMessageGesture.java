@@ -15,6 +15,8 @@
 
 package lib;
 
+import net.sf.javaml.core.Instance;
+
 public class MAIRInputMessageGesture extends MAIRInputMessage {
 	
 	private int accX;
@@ -83,5 +85,14 @@ public class MAIRInputMessageGesture extends MAIRInputMessage {
 		double diffYZ=getAccY()-getAccZ();
 		double[] vector={getAccX(),getAccY(),getAccZ(),getSizeOfVector(),diffXY,diffXZ,diffYZ};
 		return vector;
+	}
+	
+	public int distanceTo(MAIRInputMessageGesture msg){
+		int dx=Math.abs(getAccX()-msg.getAccX());
+		int dy=Math.abs(getAccY()-msg.getAccY());
+		int dz=Math.abs(getAccZ()-msg.getAccZ());
+		double rez=Math.abs(dx*dy*dz+dx*dy+dx*dz+dy*dz+dx+dy+dz+getSizeOfVector()-msg.getSizeOfVector());
+		rez=Math.sqrt(rez);
+		return (int)rez;
 	}
 }

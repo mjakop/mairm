@@ -79,6 +79,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 		try {
 			streamConnNotifier.close();
 		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return true;
 	}
@@ -136,6 +137,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 				
 			}
 			/*
+			
 			 MOUSE CONTROL
 			  try{
 				if (line.startsWith("#levDOL")){

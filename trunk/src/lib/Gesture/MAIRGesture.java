@@ -15,15 +15,19 @@
 
 package lib.Gesture;
 
+import java.util.ArrayList;
+
+import lib.MAIR;
+import lib.MAIRFilter;
 import lib.MAIRInputMessageGesture;
 import lib.MAIRObject;
+import lib.Gesture.MAIRGestures.Mode;
 
 public class MAIRGesture extends MAIRObject{
 
 	private MAIRGestureRecorder recorder = new MAIRGestureRecorder();
-	//knowledge about gesture
-	private MAIRHmm hmm = new MAIRHmm();
 	
+	@SuppressWarnings("static-access")
 	public void process(MAIRInputMessageGesture msg){
 		if (msg==null){
 			return ; 
@@ -32,17 +36,37 @@ public class MAIRGesture extends MAIRObject{
 			recorder.clear();
 			recorder.startRecordig();
 			System.out.println("Zacetek snemanja.");
-		}
-		recorder.record(msg);
-		if (msg.isEndGesture()){
+		}else if (msg.isEndGesture()){
 			recorder.stopRecording();
-			System.out.println("Konec snemanja.");
-			//normalize all values between 0 and 500
-			recorder.normalizeValues(500);
-			//now recognize or learn gesture
-			//TODO: Add IF sentence to decide what to do. 
-			hmm.build(recorder);
-			System.out.println(recorder.toString());
+			if (recorder.getRecordedSize() <= 15){
+				System.out.println("Premalo podatkov.");
+			}else{
+				System.out.println("Konec snemanja. Posnel "+recorder.getRecordedSize());
+				//normalize all values
+				recorder.normalizeValues(MAIRGestures.NORMALIZE_VALUES_LEVEL);
+				//now recognize or learn gesture
+				if (MAIR.getGestures().getCurrentMode()==Mode.LEARN_MODE){
+					MAIR.getGestures().learn(this);
+				} else {
+					MAIR.getGestures().detect(this);
+				}
+			}
+		}else{
+			//send message through filters
+			ArrayList<MAIRFilter> filters=MAIR.getGestures().getFilters();
+			for(int i=0;i<filters.size();i++){
+				MAIRFilter filter=filters.get(i);
+				msg=(MAIRInputMessageGesture)filter.process(msg);
+			}
+			if (msg==null){
+				//no recording
+				return ;
+			}
+			recorder.record(msg);
 		}
+	}	
+	
+	public MAIRGestureRecorder getRecorder() {
+		return recorder;
 	}
 }
