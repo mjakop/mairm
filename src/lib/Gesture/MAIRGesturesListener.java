@@ -16,5 +16,6 @@
 package lib.Gesture;
 
 public interface MAIRGesturesListener {
-	public void onGestureDetected(MAIRGesture gesture);
+	public void onGestureDetected(String gestureName);
+	public void onNoGestureRecognized();
 }

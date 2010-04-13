@@ -17,25 +17,20 @@ package lib;
 
 import java.util.ArrayList;
 
+import lib.Gesture.MAIRGestures;
+
 public class MAIR implements Runnable {
-
-	public static short MODE_NORMAL = 0;
-	public static short MODE_LEARN = 1;
-
 	private boolean doWork = false;
-	private short mode = MODE_NORMAL;
 	private MAIRInput input;
 	private MAIREventListener eventListener;
 	private MAIRInputMessageListener inputMessageListener;
 	private MAIRDispacher dispatcher=new MAIRDispacher();
 	private ArrayList<MAIRFilter> filters=new ArrayList<MAIRFilter>();
+	private static MAIRGestures gestures;
 	
 	public MAIR() {
 		filters.add(new MAIRFilterThreshold(10));
-	}
-	
-	public boolean loadGesturesFromFile(String fileName){
-		return false;
+		gestures.init();
 	}
 
 	public void setInput(MAIRInput input) {
@@ -57,6 +52,10 @@ public class MAIR implements Runnable {
 	public MAIREventListener getEventListener() {
 		return eventListener;
 	}
+	
+	public static MAIRGestures getGestures() {
+		return gestures;
+	}
 
 	private void checkSettings() throws Exception {
 		if (input == null) {
@@ -67,18 +66,6 @@ public class MAIR implements Runnable {
 	public boolean start() throws Exception {
 		if (doWork == false) {
 			checkSettings();
-			mode = MODE_NORMAL;
-			doWork = true;
-			(new Thread(this)).start();
-			return true;
-		}
-		return false;
-	}
-
-	public boolean startLearnMode() throws Exception {
-		if (doWork == false) {
-			checkSettings();
-			mode = MODE_LEARN;
 			doWork = true;
 			(new Thread(this)).start();
 			return true;
