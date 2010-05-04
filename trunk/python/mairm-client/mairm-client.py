@@ -21,7 +21,7 @@ class Application:
     self.sensor.set_callback(self.sensor_event)
     
   def bt_povezi(self):
-    self.sock = btsocket.socket(btsocket.AF_BT,btsocket.SOCK_STREAM)
+    self.sock = btsocket.socket(btsocket.AF_BT, btsocket.SOCK_STREAM)
     target = ''
     (address, services) = btsocket.bt_discover()
     if len(services) > 1:
@@ -41,23 +41,22 @@ class Application:
     if self.mode == Mode.SCROLLING:
       text += ', "middlebutton": "scrolling"'
     
-    test += '}}'
+    test += '}}\n'
     self.sock.send(text)
   
   def close(self):
     self.sensor.cleanup()
+    self.socket.close()
 
   def keypress(self, event):
     if event["scancode"] == key_codes.EScancodeLeftSoftkey:
-      text = '{"mouse":{'
-      text += '"leftbutton":'
+      text = '{"mouse":{"leftbutton":'
       if event["type"] == appuifw.EEventKeyDown:
         text += "down"
       elif event["type"] == appuifw.EEventKeyUp:
         text += "up"
     elif event["scancode"] == key_codes.EScancodeRightSoftkey:
-      text = '{"mouse":{'
-      text += '"rightbutton":'
+      text = '{"mouse":{"rightbutton":'
       if event["type"] == appuifw.EEventKeyDown:
         text += "down"
       elif event["type"] == appuifw.EEventKeyUp:
@@ -71,13 +70,11 @@ class Application:
       return
     else:
       return
-  
-    text += "}}"
-  
+    
+    text += "}}\n"
     self.sock.send(text)
 
 # Init sensors
-
 app = Application()
 
 appuifw.title = 'MairM Client'
