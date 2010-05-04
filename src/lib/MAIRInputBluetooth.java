@@ -15,6 +15,7 @@
 
 package lib;
 
+import java.awt.Robot;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -137,27 +138,19 @@ public class MAIRInputBluetooth extends MAIRInput {
 				
 			}
 			/*
-			
-			 MOUSE CONTROL
+			 //MOUSE CONTROL
 			  try{
-				if (line.startsWith("#levDOL")){
-					MAIRInputMessageMouse mouse=new MAIRInputMessageMouse(0,0,0);
-					mouse.setLeftButtonStatus(ButtonStatus.BUTTON_DOWN);
-					mouse.setIgnoreFilters(true);
-					return mouse;
-				} else if (line.startsWith("#levGOR")){
-					MAIRInputMessageMouse mouse=new MAIRInputMessageMouse(0,0,0);
-					mouse.setLeftButtonStatus(ButtonStatus.BUTTON_UP);
-					mouse.setIgnoreFilters(true);
-					return mouse;					
-				}else{
 					String[] parts=line.split(";");
 					int x=Integer.parseInt(parts[0]);
 					int y=Integer.parseInt(parts[1]);
 					int z=Integer.parseInt(parts[2]);
 					MAIRInputMessageMouse mouse=new MAIRInputMessageMouse(x,y,z);
+					if (line.startsWith("#levDOL")){
+						mouse.setLeftButtonStatus(ButtonStatus.BUTTON_DOWN);
+					}else if (line.startsWith("#levGOR")){
+						mouse.setLeftButtonStatus(ButtonStatus.BUTTON_UP);
+					}
 					return mouse;
-				}
 			}catch (Exception e) {
 			}*/
 			return new MAIRInputMessage();

@@ -15,8 +15,45 @@
 
 package lib;
 
-public interface MAIREventListener {
+public class MAIRFilterSimilarValue extends MAIRFilter {
 
-	public void deviceConnected();
-	public void deviceDisconnected();
+	private MAIRInputMessage prevMsg=null;
+	private double tolerance=0;
+	
+	public MAIRFilterSimilarValue(double tolerance) {
+		this.tolerance=tolerance;
+	}
+	
+	private double getVectorSize(MAIRInputMessage msg){
+		if (msg instanceof MAIRInputMessageMouse){
+			MAIRInputMessageMouse m=(MAIRInputMessageMouse)msg;
+			return m.getSizeOfVector();
+		} else if(msg instanceof MAIRInputMessageGesture){
+			MAIRInputMessageGesture m=(MAIRInputMessageGesture)msg;
+			return m.getSizeOfVector();
+		}
+		return 0.0;
+	}
+	
+	@Override
+	public MAIRInputMessage process(MAIRInputMessage msg) {
+		if (prevMsg==null){
+			return msg;
+		}else {
+			double size1=getVectorSize(msg);
+			double size2=getVectorSize(prevMsg);
+			double diff=Math.abs(size1-size2);
+			prevMsg=msg;
+			if (diff > tolerance){
+				System.out.println("Razlika: "+diff);
+				return msg;
+			} else {
+				System.out.println("Razdalja je premajhna: "+diff);
+				return null;
+			}
+		}
+	}
+
+	
+	
 }

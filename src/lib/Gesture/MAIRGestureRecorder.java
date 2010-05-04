@@ -52,7 +52,6 @@ public class MAIRGestureRecorder extends MAIRObject {
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

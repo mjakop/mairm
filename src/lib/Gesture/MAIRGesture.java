@@ -25,6 +25,7 @@ import lib.Gesture.MAIRGestures.Mode;
 
 public class MAIRGesture extends MAIRObject{
 
+	public static int MINIMUN_RECORDED_COUNT=10;
 	private MAIRGestureRecorder recorder = new MAIRGestureRecorder();
 	
 	@SuppressWarnings("static-access")
@@ -35,13 +36,25 @@ public class MAIRGesture extends MAIRObject{
 		if (msg.isStartGesture()){
 			recorder.clear();
 			recorder.startRecordig();
-			System.out.println("Zacetek snemanja.");
+			ArrayList<MAIRGesturesListener> listeners=MAIR.getGestures().getListeners();
+			for(int i=0;i<listeners.size();i++){
+				MAIRGesturesListener listener=listeners.get(i);
+				listener.onRecordingStarted();
+			}
 		}else if (msg.isEndGesture()){
 			recorder.stopRecording();
-			if (recorder.getRecordedSize() <= 15){
-				System.out.println("Premalo podatkov.");
+			if (recorder.getRecordedSize() <= MINIMUN_RECORDED_COUNT){
+				ArrayList<MAIRGesturesListener> listeners=MAIR.getGestures().getListeners();
+				for(int i=0;i<listeners.size();i++){
+					MAIRGesturesListener listener=listeners.get(i);
+					listener.onNotEnoughData(getRecorder().getRecordedSize(),MINIMUN_RECORDED_COUNT);
+				}
 			}else{
-				System.out.println("Konec snemanja. Posnel "+recorder.getRecordedSize());
+				ArrayList<MAIRGesturesListener> listeners=MAIR.getGestures().getListeners();
+				for(int i=0;i<listeners.size();i++){
+					MAIRGesturesListener listener=listeners.get(i);
+					listener.onRecordingFinished(getRecorder().getRecordedSize());
+				}
 				//normalize all values
 				recorder.normalizeValues(MAIRGestures.NORMALIZE_VALUES_LEVEL);
 				//now recognize or learn gesture
@@ -62,6 +75,7 @@ public class MAIRGesture extends MAIRObject{
 				//no recording
 				return ;
 			}
+			//record message
 			recorder.record(msg);
 		}
 	}	

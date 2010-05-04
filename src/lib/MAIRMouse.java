@@ -20,12 +20,14 @@ import java.awt.Robot;
 import java.awt.event.InputEvent;
 
 import lib.MAIRInputMessageMouse.ButtonStatus;
+import lib.MAIRInputMessageMouse.MouseState;
 
 public class MAIRMouse extends MAIRObject {
 	
+	public static int AVERAGE_QUE_LENGTH=5;
 	private Robot robot;
-	private MAIRAverageQue avgX=new MAIRAverageQue(10);
-	private MAIRAverageQue avgY=new MAIRAverageQue(10);
+	private MAIRAverageQue avgX=new MAIRAverageQue(AVERAGE_QUE_LENGTH);
+	private MAIRAverageQue avgY=new MAIRAverageQue(AVERAGE_QUE_LENGTH);
 	
 	private Robot getRobot() {
 		if (robot==null){
@@ -44,6 +46,10 @@ public class MAIRMouse extends MAIRObject {
 		int locX=MouseInfo.getPointerInfo().getLocation().x;
 		int locY=MouseInfo.getPointerInfo().getLocation().y;
 		getRobot().mouseMove(locX+dx_i, locY+dy_i);
+	}
+	
+	private void scrollMouse(double dx){
+		getRobot().mouseWheel((int)Math.round(dx));
 	}
 	
 	private double getValueIfGratherThan(double x, double limit, double defaultValue){
@@ -85,12 +91,10 @@ public class MAIRMouse extends MAIRObject {
 		
 		if (anyUp){
 			getRobot().mouseRelease(flagsUp);
-		}
-		
-		//TODO: Add wheel control.
+		}		
 	}
 	
-	public void processMove(MAIRInputMessageMouse msg){
+	public void processMoveScrolling(MAIRInputMessageMouse msg){
 		double dx=0;
 		double dy=0;
 		int dirX; //-1 forward, 1 backward
@@ -106,22 +110,22 @@ public class MAIRMouse extends MAIRObject {
 		} else {
 			dirY=1;
 		}
-		dx=getValueIfGratherThan(Math.abs(msg.getAccY()),10,0);
-		dy=getValueIfGratherThan(Math.abs(msg.getAccX()),10,0);
+		dx=getValueIfGratherThan(Math.abs(msg.getAccY()),40,0);
+		dy=getValueIfGratherThan(Math.abs(msg.getAccX()),40,0);
 		//make more accurate when phone is not to much tilt.
 		double factorChangeX=1.0;
 		double factorChangeY=1.0;
-		if (dx > 0 && dx < 25){
+		if (dx > 0 && dx < 100){
 			factorChangeX=0.1;
 		}
-		if (dy > 0 && dy < 25){
+		if (dy > 0 && dy < 100){
 			factorChangeY=0.1;
 		}
-		if(dx > 0 && dx < 50){
-			factorChangeX=dx/50.0;
+		if(dx > 0 && dx < 200){
+			factorChangeX=dx/200.0;
 		}
-		if(dy > 0 && dy < 50){
-			factorChangeY=dy/50.0;
+		if(dy > 0 && dy < 200){
+			factorChangeY=dy/200.0;
 		}
 		dx*=factorChangeX*dirX;
 		dy*=factorChangeY*dirY;
@@ -130,11 +134,16 @@ public class MAIRMouse extends MAIRObject {
 		avgY.put(dy);
 		dx=avgX.getAverage();
 		dy=avgY.getAverage();
-		moveMouse(dx, dy);
+		if (msg.getState()==MouseState.MOVING_MODE){	
+			moveMouse(dx/4, dy/4); //only here divide and reduce 
+		}else {
+			//scroll window content on base of dx movement input device.
+			scrollMouse(dx/4);
+		}
 	}
 	
 	public void process(MAIRInputMessageMouse msg){
-		processMove(msg);
+		processMoveScrolling(msg);
 		processButtons(msg);
 	}
 	

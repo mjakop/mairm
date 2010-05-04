@@ -27,7 +27,7 @@ public class MAIRDispacher {
 	//and send to correct class....
 	public void dispatch(MAIRInputMessage msg){
 		if (msg instanceof MAIRInputMessageKeyboard){
-			System.out.println("Ukaz tipkovnice");
+			keyboard.process((MAIRInputMessageKeyboard)msg);
 		} else if (msg instanceof MAIRInputMessageMouse){
 			mouse.process((MAIRInputMessageMouse)msg);
 		}else if (msg instanceof MAIRInputMessageGesture){

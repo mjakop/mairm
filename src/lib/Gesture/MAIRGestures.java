@@ -21,6 +21,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.SortedSet;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
@@ -39,11 +40,13 @@ public class MAIRGestures {
 	public enum Mode {DETECT_MODE, LEARN_MODE};
 	public static int NEAREST_NEIGHBORS_COUNT=5;
 	public static int NORMALIZE_VALUES_LEVEL=500;
+	public static int FASTDTW_RADIUS=7;
 	
 	private static ArrayList<MAIRGesture> gestures=new ArrayList<MAIRGesture>();
 	private static Dataset data=new DefaultDataset();
-	private static KNearestNeighbors knn=new KNearestNeighbors(NEAREST_NEIGHBORS_COUNT,new FastDTW(10));
+	private static KNearestNeighbors knn=new KNearestNeighbors(NEAREST_NEIGHBORS_COUNT,new FastDTW(FASTDTW_RADIUS));
 	private static Mode currentMode=Mode.DETECT_MODE;
+	//here we save the name for learning gesture.
 	private static String learningGestureName="";
 	private static ArrayList<MAIRFilter> filters=new ArrayList<MAIRFilter>();
 	private static ArrayList<MAIRGesturesListener> listeners=new ArrayList<MAIRGesturesListener>();
@@ -109,13 +112,18 @@ public class MAIRGestures {
 		data.add(inst);
 		rebuildKnowledge();
 		currentMode=Mode.DETECT_MODE;
+		//inform listeners about learning
+		ArrayList<MAIRGesturesListener> listeners=getListeners();
+		for(int i=0;i<listeners.size();i++){
+			listeners.get(i).onGestureLearned(learningGestureName);
+		}
 	}
 	
 	public static void detect(MAIRGesture gesture){
 		try{
 			double[] gData=gesture.getRecorder().getData();
 			DenseInstance inst=new DenseInstance(gData,"DETECT");
-			Object obj=knn.classify(inst);
+			Object obj=knn.classify(inst);			
 			if (obj==null){
 				//not recognized any of available gestures.
 				ArrayList<MAIRGesturesListener> listeners=getListeners();
@@ -144,4 +152,16 @@ public class MAIRGestures {
 	public static void addListener(MAIRGesturesListener listener){
 		getListeners().add(listener);
 	}
+	
+	public static String[] getLearnedGestureNames(){
+		SortedSet<Object> v=data.classes();
+		String[] result=new String[v.size()];
+		int i=0;
+		for (Object obj : v) {
+			result[i]=(String)obj;
+			i++;
+		}
+		return result;
+	}
+
 }

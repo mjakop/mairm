@@ -1,3 +1,18 @@
+/***************************************************************************
+ *   Copyright (C) 2010 by                                                 *
+ *   	Matej Jakop <matej@jakop.si>                                       *
+ *      Gregor Kališnik <gregor@unimatrix-one.org>                         *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License version 3        *
+ *   as published by the Free Software Foundation.                         *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ ***************************************************************************/
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,10 +33,15 @@ public class JGraph  extends JComponent {
 	private Color dotColor=Color.RED;
 	private Color legendColor=Color.darkGray;
 	private Color fontColor=Color.WHITE;
+	private String title;
 	
 	public JGraph(int maxPoints) {
 		points=new double[maxPoints];
 		setDoubleBuffered(true);
+	}
+	
+	public void setTextTitle(String title){
+		this.title=title;
 	}
 	
 	@Override
@@ -120,5 +140,7 @@ public class JGraph  extends JComponent {
 			g2.setColor(fontColor);
 			g2.drawString("Waiting to receive data.", 10, getHeight()/2);
 		}
+		g2.setColor(fontColor);
+		g2.drawString(title, 10, 20);
 	}
 }

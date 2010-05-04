@@ -16,6 +16,10 @@
 package lib.Gesture;
 
 public interface MAIRGesturesListener {
+	public void onRecordingStarted();
+	public void onRecordingFinished(int length);
+	public void onNotEnoughData(int recorded, int needed);
+	public void onGestureLearned(String gestureName);
 	public void onGestureDetected(String gestureName);
 	public void onNoGestureRecognized();
 }
