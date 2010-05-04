@@ -82,7 +82,7 @@ public class MAIR implements Runnable {
 			input.prepare();
 			while(doWork){
 				input.connect();
-				//device has been disconnected
+				//device has been connected
 				if (eventListener!=null){
 					eventListener.deviceConnected();
 				}
@@ -119,6 +119,8 @@ public class MAIR implements Runnable {
 					dispatcher.dispatch(msg);
 				}
 				input.disconnect();
+				//wait for new device.
+				doWork=true;
 			}
 			input.cleanup();
 		} catch (Exception e) {
