@@ -56,6 +56,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	private JGraph graphSize;
 	private JTextField gestureNameInput;
 	private JButton learnButton;
+	private JButton resizeButton;
 	private MAIR m;
 	private boolean systemTraySupported=false;
 	private SystemTray tray;
@@ -77,7 +78,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		m.setEventListener(this);
 		m.setInputMessageListener(this);
 		m.getGestures().addListener(this);
-		m.start();
+		//m.start();
 		GestureDetectedActions.loadFromFile(gestureActionsFileName);
 		//synchronize databases
 		String[] learned=MAIRGestures.getLearnedGestureNames();
@@ -164,7 +165,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	public JPanel getControlsContainer(){
 		if (controlsContainer==null){
 			controlsContainer=new JPanel();
-			controlsContainer.setPreferredSize(new Dimension(400, 600));
+			controlsContainer.setSize(new Dimension(400, 600));
 		}
 		return controlsContainer;
 	}
@@ -172,10 +173,17 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	public JPanel getGraphContainer(){
 		if (graphContainer==null){
 			graphContainer=new JPanel();
-			graphContainer.setPreferredSize(new Dimension(400, 600));
+			graphContainer.setSize(new Dimension(400, 600));
 			graphContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
 		}
 		return graphContainer;
+	}
+	
+	public JButton getResizeButton() {
+		if (resizeButton==null){
+			resizeButton=new JButton("P");
+		}
+		return resizeButton;
 	}
 	
 	public JGraph getGraphX(){
@@ -223,15 +231,23 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((screenSize.width-getWidth())/2, (screenSize.height-getHeight())/2);
 		//setLayout(new FlowLayout(FlowLayout.CENTER));
-		setLayout(new GridLayout(1,1));
+		setLayout(null);
 		add(getGraphContainer());
 		getGraphContainer().add(getGraphX());
 		getGraphContainer().add(getGraphY());
 		getGraphContainer().add(getGraphZ());
 		getGraphContainer().add(getGraphSize());
+				
 		add(getControlsContainer());
 		getControlsContainer().add(getGestureNameInput());
 		getControlsContainer().add(getLearnButton());
+		repositionUIElements();
+	}
+	
+	private void repositionUIElements(){
+		//position elements
+		getGraphContainer().setLocation(0, 0);
+		getControlsContainer().setLocation(getWidth()-getControlsContainer().getWidth(), 0);
 	}
 
 	
