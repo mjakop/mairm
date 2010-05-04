@@ -14,6 +14,7 @@
  ***************************************************************************/
 
 import java.awt.AWTException;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -34,9 +35,11 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -56,6 +59,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	private JGraph graphZ;
 	private JGraph graphSize;
 	private JTextField gestureNameInput;
+	private JLabel gestureNameLabel;
 	private JButton learnButton;
 	private JResizeButton resizeButton;
 	private MAIR m;
@@ -63,6 +67,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	private SystemTray tray;
 	private TrayIcon myTrayIcon;
 	private boolean  alreadyDisplayedMinimizeMSG=false;
+	
 	
 	public Main() {
 		systemTraySupported=SystemTray.isSupported();
@@ -79,7 +84,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		m.setEventListener(this);
 		m.setInputMessageListener(this);
 		m.getGestures().addListener(this);
-		//m.start();
+		m.start();
 		GestureDetectedActions.loadFromFile(gestureActionsFileName);
 		//synchronize databases
 		String[] learned=MAIRGestures.getLearnedGestureNames();
@@ -149,10 +154,17 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	
 	public JButton getLearnButton(){
 		if (learnButton==null){
-			learnButton=new JButton("Nauèi");
+			learnButton=new JButton("Learn");
 			learnButton.addActionListener(this);
 		}
 		return learnButton;
+	}
+	
+	public JLabel getGestureNameLabel(){
+		if (gestureNameLabel==null){
+			gestureNameLabel=new JLabel("Gesture name:");
+		}
+		return gestureNameLabel;
 	}
 	
 	public JTextField getGestureNameInput(){
@@ -166,7 +178,9 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	public JPanel getControlsContainer(){
 		if (controlsContainer==null){
 			controlsContainer=new JPanel();
-			controlsContainer.setSize(new Dimension(400, 600));
+			controlsContainer.setSize(new Dimension(400, 595));
+			controlsContainer.setLayout(new FlowLayout());
+			controlsContainer.setBorder(BorderFactory.createLineBorder(Color.black));
 		}
 		return controlsContainer;
 	}
@@ -253,6 +267,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		
 		getControlsContainer().setVisible(false);
 		add(getControlsContainer());
+		getControlsContainer().add(getGestureNameLabel());
 		getControlsContainer().add(getGestureNameInput());
 		getControlsContainer().add(getLearnButton());
 		repositionUIElements(false);
@@ -263,14 +278,13 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		getGraphContainer().setLocation(5, 0);
 		getResizeButton().setLocation(getGraphContainer().getX()+getGraphContainer().getWidth()+5, (getHeight()-getResizeButton().getHeight())/2);
 		if (controlsVisible==true){
-			getControlsContainer().setLocation(getWidth()-getControlsContainer().getWidth(), 0);
+			getControlsContainer().setLocation(getWidth()-getControlsContainer().getWidth()-5, 5);
 			getControlsContainer().setVisible(true);
 		}else {
 			getControlsContainer().setVisible(false);
 		}
 	}
 
-	
 	@Override
 	public void deviceConnected() {
 		getNotifyWindow().displayMessage("Naprava se je povezala.");
@@ -371,6 +385,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource()==getLearnButton()){
 			m.getGestures().learnGestureFor(getGestureNameInput().getText());
+			getGestureNameInput().setEditable(false);
 			System.out.println("V redu, pokaži mi.");
 		}else if (e.getSource()==getResizeButton()){
 			getResizeButton().changeResizeStatus();
@@ -414,6 +429,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	@Override
 	public void onGestureLearned(String gestureName) {
 		GestureDetectedActions.createNewActionForGestureIfNotExist(gestureName);
-		getNotifyWindow().displayMessage("Nauèil (upam) sem se: "+gestureName);		
+		getNotifyWindow().displayMessage("Nauèil (upam) sem se: "+gestureName);	
+		getGestureNameInput().setEditable(true);
 	}	
 }
