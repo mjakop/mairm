@@ -16,6 +16,7 @@
 import java.awt.AWTException;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.PopupMenu;
@@ -56,7 +57,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	private JGraph graphSize;
 	private JTextField gestureNameInput;
 	private JButton learnButton;
-	private JButton resizeButton;
+	private JResizeButton resizeButton;
 	private MAIR m;
 	private boolean systemTraySupported=false;
 	private SystemTray tray;
@@ -179,9 +180,11 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		return graphContainer;
 	}
 	
-	public JButton getResizeButton() {
+	public JResizeButton getResizeButton() {
 		if (resizeButton==null){
-			resizeButton=new JButton("P");
+			resizeButton=new JResizeButton();
+			resizeButton.setSize(10,200);
+			resizeButton.addActionListener(this);
 		}
 		return resizeButton;
 	}
@@ -222,15 +225,23 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		return graphSize;
 	}
 	
+	
+	private void calculateFrameSize(boolean fullSize){
+		if (fullSize==false){
+			setSize(800-getControlsContainer().getWidth()+getResizeButton().getWidth()+15,640);
+		} else {
+			setSize(getGraphContainer().getWidth()+getControlsContainer().getWidth()+getResizeButton().getWidth()+15,640);
+		}
+	}
+	
 	private void setUI() {
-		setTitle("MAIR: learning application");
-		setSize(800,658);
+		setTitle("MAIR");
+		calculateFrameSize(false);
 		setResizable(false);
 		addWindowListener(this);
 		//center window
 		Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((screenSize.width-getWidth())/2, (screenSize.height-getHeight())/2);
-		//setLayout(new FlowLayout(FlowLayout.CENTER));
 		setLayout(null);
 		add(getGraphContainer());
 		getGraphContainer().add(getGraphX());
@@ -238,16 +249,25 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		getGraphContainer().add(getGraphZ());
 		getGraphContainer().add(getGraphSize());
 				
+		add(getResizeButton());
+		
+		getControlsContainer().setVisible(false);
 		add(getControlsContainer());
 		getControlsContainer().add(getGestureNameInput());
 		getControlsContainer().add(getLearnButton());
-		repositionUIElements();
+		repositionUIElements(false);
 	}
 	
-	private void repositionUIElements(){
+	private void repositionUIElements(boolean controlsVisible){
 		//position elements
-		getGraphContainer().setLocation(0, 0);
-		getControlsContainer().setLocation(getWidth()-getControlsContainer().getWidth(), 0);
+		getGraphContainer().setLocation(5, 0);
+		getResizeButton().setLocation(getGraphContainer().getX()+getGraphContainer().getWidth()+5, (getHeight()-getResizeButton().getHeight())/2);
+		if (controlsVisible==true){
+			getControlsContainer().setLocation(getWidth()-getControlsContainer().getWidth(), 0);
+			getControlsContainer().setVisible(true);
+		}else {
+			getControlsContainer().setVisible(false);
+		}
 	}
 
 	
@@ -352,6 +372,14 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		if (e.getSource()==getLearnButton()){
 			m.getGestures().learnGestureFor(getGestureNameInput().getText());
 			System.out.println("V redu, pokaži mi.");
+		}else if (e.getSource()==getResizeButton()){
+			getResizeButton().changeResizeStatus();
+			if (getResizeButton().isResized()){
+				calculateFrameSize(true);
+				repositionUIElements(true);
+			} else {
+				calculateFrameSize(false);
+			}
 		}
 	}
 
@@ -387,7 +415,5 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	public void onGestureLearned(String gestureName) {
 		GestureDetectedActions.createNewActionForGestureIfNotExist(gestureName);
 		getNotifyWindow().displayMessage("Nauèil (upam) sem se: "+gestureName);		
-	}
-	
-	
+	}	
 }

@@ -28,7 +28,7 @@ public class JGraph  extends JComponent {
 	private int putPosition=0;
 	private double minValue=Double.MAX_VALUE;
 	private double maxValue=-Double.MAX_VALUE;
-	private Color backgroundColor=Color.BLACK;
+	private Color backgroundColor=Color.gray;
 	private Color lineColor=Color.WHITE;
 	private Color dotColor=Color.RED;
 	private Color legendColor=Color.darkGray;
