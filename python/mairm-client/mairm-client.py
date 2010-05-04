@@ -18,7 +18,7 @@ class Application:
     self.bt_connect()
     self.mode = Mode.MOUSE
     
-    sensor.set_callback(sensor_event)
+    self.sensor.set_callback(sensor_event)
     
   def bt_povezi(self):
     self.sock = btsocket.socket(btsocket.AF_BT,btsocket.SOCK_STREAM)
@@ -68,6 +68,9 @@ class Application:
           self.mode = Mode.SCROLLING
         else:
           self.mode = Mode.MOUSE
+      return
+    else:
+      return
   
     text += "}}"
   
