@@ -17,6 +17,7 @@ class OldSensor(AbstractSensor):
   def __init__(self):
     sensors = sensor.sensors()
     self.sensor = sensor.Sensor(sensors["AccSensor"]["id"], sensors["AccSensor"]["category"])
+    self.cb = None
     
     self.sensor.connect(self.coord_cb)
   

@@ -64,7 +64,7 @@ class Application:
         text += "up"
     elif event["scancode"] == key_codes.EScancodeYes:
       if event["type"] == appuifw.EEventKeyUp:
-        if self.mode = Mode.MOUSE:
+        if self.mode == Mode.MOUSE:
           self.mode = Mode.SCROLLING
         else:
           self.mode = Mode.MOUSE
