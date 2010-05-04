@@ -38,6 +38,7 @@ public class JGraph  extends JComponent {
 	public JGraph(int maxPoints) {
 		points=new double[maxPoints];
 		setDoubleBuffered(true);
+		
 	}
 	
 	public void setTextTitle(String title){
@@ -103,6 +104,7 @@ public class JGraph  extends JComponent {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		setSize(getParent().getWidth(),getHeight());
 		Graphics2D g2=(Graphics2D)g;
 		enableAntiAlliasing(g2);
 		g2.setColor(backgroundColor);
@@ -114,7 +116,7 @@ public class JGraph  extends JComponent {
 			g2.setColor(legendColor);
 			g2.drawLine(0, (int)height, getWidth(), (int)height);
 			int dx=getWidth()/size;
-			for(int i=1;i<size;i++){
+			for(int i=1;i<=size;i+=10){
 				g2.drawLine(i*dx,0, i*dx,getHeight());
 			}
 			int prevX=0;
