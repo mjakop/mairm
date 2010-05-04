@@ -1,0 +1,40 @@
+<MAIRM>
+	<actions>
+		<action gesture="/">
+			<exec>sa</exec>
+		</action>
+		<action gesture="DESNO">
+			<exec>next.exe</exec>
+		</action>
+		<action gesture="DOL">
+			<exec>sa</exec>
+		</action>
+		<action gesture="FIREFOX">
+			<exec>C:\Program Files\Mozilla Firefox\firefox.exe</exec>
+		</action>
+		<action gesture="KROG">
+			<exec>stop.exe</exec>
+		</action>
+		<action gesture="KROG_LEVO">
+			<exec>sa</exec>
+		</action>
+		<action gesture="LEVO">
+			<exec>prev.exe</exec>
+		</action>
+		<action gesture="LUKA">
+			<exec>winamp.exe</exec>
+		</action>
+		<action gesture="NAPREJ">
+			<exec>sa</exec>
+		</action>
+		<action gesture="OMG">
+			<exec>C:\Program Files\Winamp\winamp.exe</exec>
+		</action>
+		<action gesture="S">
+			<exec>play.exe</exec>
+		</action>
+		<action gesture="W">
+			<exec>sa</exec>
+		</action>
+	</actions>
+</MAIRM>

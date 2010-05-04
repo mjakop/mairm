@@ -18,6 +18,7 @@ package lib;
 public class MAIRInputMessageMouse extends MAIRInputMessage {
 
 	public enum ButtonStatus {BUTTON_DOWN, BUTTON_UP, BUTTON_NONE};
+	public enum MouseState {MOVING_MODE,SCROLLING_MODE};
 	
 	private int accX;
 	private int accY;
@@ -25,6 +26,7 @@ public class MAIRInputMessageMouse extends MAIRInputMessage {
 	
 	private ButtonStatus leftButtonStatus=ButtonStatus.BUTTON_NONE;
 	private ButtonStatus rightButtonStatus=ButtonStatus.BUTTON_NONE;
+	private MouseState state=MouseState.MOVING_MODE;
 	
 	public MAIRInputMessageMouse(int x, int y, int z) {
 		accX=x;
@@ -59,6 +61,14 @@ public class MAIRInputMessageMouse extends MAIRInputMessage {
 	public double getSizeOfVector(){
 		double size=Math.sqrt(accX*accX+accY*accY+accZ*accZ);
 		return size;
+	}
+	
+	public MouseState getState() {
+		return state;
+	}
+	
+	public void setState(MouseState state) {
+		this.state = state;
 	}
 	
 	public ButtonStatus getLeftButtonStatus() {

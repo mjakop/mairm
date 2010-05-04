@@ -17,4 +17,6 @@ package lib;
 
 public class MAIRInputMessageKeyboard extends MAIRInputMessage {
 
+	
+	
 }

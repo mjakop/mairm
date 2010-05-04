@@ -15,6 +15,25 @@
 
 package lib;
 
+import java.awt.Robot;
+
 public class MAIRKeyboard {
 
+	private Robot robot;
+	
+	private Robot getRobot(){
+		if (robot==null){
+			try{
+				robot=new Robot();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return robot;
+	}
+	
+	
+	public void process(MAIRInputMessageKeyboard msg){
+
+	}
 }
