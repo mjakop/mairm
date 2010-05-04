@@ -9,6 +9,9 @@ class AbstractSensor:
   
   def set_callback(self, cb):
     pass
+  
+  def cleanup(self):
+    pass
 
 class OldSensor(AbstractSensor):
   def __init__(self):
@@ -25,3 +28,12 @@ class OldSensor(AbstractSensor):
   
   def set_callback(self, cb):
     self.cb = cb
+  
+  def cleanup(self):
+    self.sensor.disconnect()
+
+def init_sensor():
+  try:
+    return OldSensor()
+  except:
+    raise Exception('No supported accelometer sensors API.')
