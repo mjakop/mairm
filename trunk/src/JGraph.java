@@ -114,7 +114,7 @@ public class JGraph  extends JComponent {
 			g2.setColor(legendColor);
 			g2.drawLine(0, (int)height, getWidth(), (int)height);
 			int dx=getWidth()/size;
-			for(int i=1;i<size;i+=10){
+			for(int i=1;i<size;i++){
 				g2.drawLine(i*dx,0, i*dx,getHeight());
 			}
 			int prevX=0;
