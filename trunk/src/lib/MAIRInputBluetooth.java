@@ -71,6 +71,15 @@ public class MAIRInputBluetooth extends MAIRInput {
 	
 	@Override
 	public boolean disconnect() throws IOException{
+		if (inputStream!=null){
+			inputStream.close();
+			inputStream=null;
+		}
+		if (outputStream!=null){
+			outputStream.close();
+			outputStream=null;
+		}
+		bufferedReader=null;
 		connection.close();
 		return true;
 	}
