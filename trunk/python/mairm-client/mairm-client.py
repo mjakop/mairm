@@ -18,7 +18,7 @@ class Application:
     self.bt_connect()
     self.mode = Mode.MOUSE
     
-    self.sensor.set_callback(sensor_event)
+    self.sensor.set_callback(self.sensor_event)
     
   def bt_povezi(self):
     self.sock = btsocket.socket(btsocket.AF_BT,btsocket.SOCK_STREAM)
@@ -36,7 +36,7 @@ class Application:
     sock.connect(target)
     print "OK."
 
-  def sensor_event(x, y, z):
+  def sensor_event(self, x, y, z):
     text = '{"mouse":{"x": %f, "y": %f, "z": %f' % (x, y, z)
     if self.mode == Mode.SCROLLING:
       text += ', "middlebutton": "scrolling"'
@@ -47,7 +47,7 @@ class Application:
   def close(self):
     self.sensor.cleanup()
 
-  def keypress(event):
+  def keypress(self, event):
     if event["scancode"] == key_codes.EScancodeLeftSoftkey:
       text = '{"mouse":{'
       text += '"leftbutton":'
