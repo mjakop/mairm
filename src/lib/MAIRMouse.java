@@ -95,50 +95,66 @@ public class MAIRMouse extends MAIRObject {
 	}
 	
 	public void processMoveScrolling(MAIRInputMessageMouse msg){
-		double dx=0;
-		double dy=0;
-		int dirX; //-1 forward, 1 backward
-		int dirY; //-1 left, 1 right
-		//calculate direction
-		if (msg.getAccY() < 0){
-			dirX=1;
-		} else {
-			dirX=-1;
-		}
-		if (msg.getAccX() < 0){
-			dirY=-1;
-		} else {
-			dirY=1;
-		}
-		dx=getValueIfGratherThan(Math.abs(msg.getAccY()),40,0);
-		dy=getValueIfGratherThan(Math.abs(msg.getAccX()),40,0);
-		//make more accurate when phone is not to much tilt.
-		double factorChangeX=1.0;
-		double factorChangeY=1.0;
-		if (dx > 0 && dx < 100){
-			factorChangeX=0.1;
-		}
-		if (dy > 0 && dy < 100){
-			factorChangeY=0.1;
-		}
-		if(dx > 0 && dx < 200){
-			factorChangeX=dx/200.0;
-		}
-		if(dy > 0 && dy < 200){
-			factorChangeY=dy/200.0;
-		}
-		dx*=factorChangeX*dirX;
-		dy*=factorChangeY*dirY;
-		//average value with last values for smoother movement
-		avgX.put(dx);
-		avgY.put(dy);
-		dx=avgX.getAverage();
-		dy=avgY.getAverage();
-		if (msg.getState()==MouseState.MOVING_MODE){	
+		if (msg.getState()==MouseState.SCROLLING_MODE){
+			//mouse scrolling mode
+			double dx=0;
+			int dirX; //-1 forward, 1 backward
+			//calculate direction
+			if (msg.getAccX() < 0){
+				dirX=1;
+			} else {
+				dirX=-1;
+			}
+			if (Math.abs(msg.getAccX()) > 40){
+				dx=1;
+			}else{
+				dx=0;
+			}
+			if (dx > 0){
+				scrollMouse(dx*dirX);
+			}
+		} else { 
+			//mouse moving mode
+			double dx=0;
+			double dy=0;
+			int dirX; //-1 forward, 1 backward
+			int dirY; //-1 left, 1 right
+			//calculate direction
+			if (msg.getAccY() < 0){
+				dirX=1;
+			} else {
+				dirX=-1;
+			}
+			if (msg.getAccX() < 0){
+				dirY=-1;
+			} else {
+				dirY=1;
+			}
+			dx=getValueIfGratherThan(Math.abs(msg.getAccY()),40,0);
+			dy=getValueIfGratherThan(Math.abs(msg.getAccX()),40,0);
+			//make more accurate when phone is not to much tilt.
+			double factorChangeX=1.0;
+			double factorChangeY=1.0;
+			if (dx > 0 && dx < 100){
+				factorChangeX=0.1;
+			}
+			if (dy > 0 && dy < 100){
+				factorChangeY=0.1;
+			}
+			if(dx > 0 && dx < 200){
+				factorChangeX=dx/200.0;
+			}
+			if(dy > 0 && dy < 200){
+				factorChangeY=dy/200.0;
+			}
+			dx*=factorChangeX*dirX;
+			dy*=factorChangeY*dirY;
+			//average value with last values for smoother movement
+			avgX.put(dx);
+			avgY.put(dy);
+			dx=avgX.getAverage();
+			dy=avgY.getAverage();
 			moveMouse(dx/4, dy/4); //only here divide and reduce 
-		}else {
-			//scroll window content on base of dx movement input device.
-			scrollMouse(dx/4);
 		}
 	}
 	

@@ -16,7 +16,18 @@
 package lib;
 
 public class MAIRInputMessageKeyboard extends MAIRInputMessage {
-
 	
+	private int keyCode;
+	
+	public MAIRInputMessageKeyboard(int keyCode) {
+		this.keyCode=keyCode;
+	}
+	
+	public int getKeyCode() {
+		return keyCode;
+	}
+	public void setKeyCode(int keyCode) {
+		this.keyCode = keyCode;
+	}
 	
 }

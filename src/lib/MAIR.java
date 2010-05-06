@@ -15,6 +15,7 @@
 
 package lib;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import lib.Gesture.MAIRGestures;
@@ -75,13 +76,17 @@ public class MAIR implements Runnable {
 
 	public void stop() {
 		doWork = false;
+		input.interruptWaiting();
 	}
 
 	public void run() {
 		try {
 			input.prepare();
 			while(doWork){
-				input.connect();
+				if (input.connect()==false){
+					doWork=false;
+					break;
+				}
 				//device has been connected
 				if (eventListener!=null){
 					eventListener.deviceConnected();

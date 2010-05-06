@@ -77,7 +77,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	public void init() throws Exception{
 		m=new MAIR();
 		//with input we specify from where lib should read data
-		int i=100+(int)(Math.random()*100);
+		int i=1000+(int)(Math.random()*1000);
 		MAIRInput input=new MAIRInputBluetooth("MAIR"+i);
 		m.setInput(input);
 		m.getGestures().loadFromFile("znanje.txt");
@@ -109,7 +109,24 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		if (myTrayIcon==null){
 			try{
 				Image img=ImageIO.read(new File("trayicon.gif"));
-				myTrayIcon=new TrayIcon(img, "MAIRM");				
+				myTrayIcon=new TrayIcon(img, "MAIRM");		
+				final String reloadButtonLabel="Reload gesture action bindings";
+				ActionListener listenerMenu=new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						if (e.getActionCommand().equalsIgnoreCase(reloadButtonLabel)){
+							try {
+								GestureDetectedActions.loadFromFile(gestureActionsFileName);
+								myTrayIcon.displayMessage("MAIRM", "Gesture binding file "+gestureActionsFileName+" has been reloaded.", TrayIcon.MessageType.INFO);
+							} catch (Exception e1) {
+								myTrayIcon.displayMessage("MAIRM", "Error with reloading.", TrayIcon.MessageType.ERROR);
+							}
+						}
+						
+					}
+				};
+				
 				MouseListener listener=new MouseListener() {
 					
 					@Override
@@ -144,6 +161,10 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 						}
 					}
 				};
+				PopupMenu menu=new PopupMenu();
+				menu.add(reloadButtonLabel);
+				menu.addActionListener(listenerMenu);
+				myTrayIcon.setPopupMenu(menu);
 				myTrayIcon.addMouseListener(listener);
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -250,6 +271,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	
 	private void setUI() {
 		setTitle("MAIR");
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		calculateFrameSize(false);
 		setResizable(false);
 		addWindowListener(this);

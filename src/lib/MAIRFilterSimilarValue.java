@@ -53,7 +53,4 @@ public class MAIRFilterSimilarValue extends MAIRFilter {
 			}
 		}
 	}
-
-	
-	
 }
