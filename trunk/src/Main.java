@@ -67,6 +67,8 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	private SystemTray tray;
 	private TrayIcon myTrayIcon;
 	private boolean  alreadyDisplayedMinimizeMSG=false;
+	private Image trayIconNormal=null;
+	private Image trayIconConnected=null;
 	
 	
 	public Main() {
@@ -108,8 +110,9 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	public TrayIcon getMyTrayIcon() {
 		if (myTrayIcon==null){
 			try{
-				Image img=ImageIO.read(new File("trayicon.gif"));
-				myTrayIcon=new TrayIcon(img, "MAIRM");		
+				trayIconNormal=ImageIO.read(new File("trayicon.gif"));
+				trayIconConnected=ImageIO.read(new File("trayicon_connected.gif"));
+				myTrayIcon=new TrayIcon(trayIconNormal, "MAIRM");		
 				final String reloadButtonLabel="Reload gesture action bindings";
 				ActionListener listenerMenu=new ActionListener() {
 					
@@ -228,7 +231,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		if (graphX==null){
 			graphX=new JGraph(150);
 			graphX.setSize(10, 150);
-			graphX.setTextTitle("X os");
+			graphX.setTextTitle("X axle");
 		}
 		return graphX;
 	}
@@ -237,7 +240,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		if (graphY==null){
 			graphY=new JGraph(150);
 			graphY.setSize(100, 150);
-			graphY.setTextTitle("Y os");
+			graphY.setTextTitle("Y axle");
 		}
 		return graphY;
 	}
@@ -246,7 +249,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		if (graphZ==null){
 			graphZ=new JGraph(150);
 			graphZ.setSize(10, 150);
-			graphZ.setTextTitle("Z os");
+			graphZ.setTextTitle("Z axle");
 		}
 		return graphZ;
 	}
@@ -255,7 +258,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		if (graphSize==null){
 			graphSize=new JGraph(150);
 			graphSize.setSize(10, 150);
-			graphSize.setTextTitle("Vektor velikosti");
+			graphSize.setTextTitle("Size of vector");
 		}
 		return graphSize;
 	}
@@ -309,12 +312,18 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 
 	@Override
 	public void deviceConnected() {
-		getNotifyWindow().displayMessage("Naprava se je povezala.");
+		getNotifyWindow().displayMessage("MAIRM mobile device is connected.");
+		if(systemTraySupported){
+			getMyTrayIcon().setImage(trayIconConnected);
+		}
 	}
 	
 	@Override
 	public void deviceDisconnected() {
-		getNotifyWindow().displayMessage("Naprava se je odklopila.");
+		getNotifyWindow().displayMessage("MAIRM mobile device is disconnected.");
+		if(systemTraySupported){
+			getMyTrayIcon().setImage(trayIconNormal);
+		}
 		try{
 			m.getGestures().saveToFile("znanje.txt");
 			GestureDetectedActions.saveChangesToFile("actions.xml");
@@ -383,7 +392,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 				//display only once.
 				if(alreadyDisplayedMinimizeMSG==false){
 					alreadyDisplayedMinimizeMSG=true;
-					getMyTrayIcon().displayMessage("MAIRM","Aplikacija je še vedno aktivna in v ozadju spremlja vaše akcije.",TrayIcon.MessageType.INFO);
+					getMyTrayIcon().displayMessage("MAIRM","Aplication is still active Click on icon to restore window back.",TrayIcon.MessageType.INFO);
 				}
 			} catch (AWTException e1) {
 				e1.printStackTrace();
@@ -422,19 +431,19 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 
 	@Override
 	public void onGestureDetected(String gestureName){
-		getNotifyWindow().displayMessage("Prepoznal sem "+gestureName);
+		getNotifyWindow().displayMessage("Recognized "+gestureName);
 		GestureDetectedAction action = GestureDetectedActions.getActionForGesture(gestureName);
 		action.execute();
 	}
 
 	@Override
 	public void onNoGestureRecognized() {
-		getNotifyWindow().displayMessage("Nisem prepoznal nobene.");
+		getNotifyWindow().displayMessage("No gesture has been recognized.");
 	}
 
 	@Override
 	public void onNotEnoughData(int recorded, int needed) {
-		getNotifyWindow().displayMessage("Premalo podatkov, posnel="+recorded+", potreboval="+needed);
+		getNotifyWindow().displayMessage("Please repeat. To small amount of data.");
 	}
 
 	@Override
@@ -451,7 +460,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	@Override
 	public void onGestureLearned(String gestureName) {
 		GestureDetectedActions.createNewActionForGestureIfNotExist(gestureName);
-		getNotifyWindow().displayMessage("Nauèil (upam) sem se: "+gestureName);	
+		getNotifyWindow().displayMessage("I learnt "+gestureName);	
 		getGestureNameInput().setEditable(true);
 	}	
 }

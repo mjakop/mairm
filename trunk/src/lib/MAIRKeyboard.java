@@ -17,6 +17,8 @@ package lib;
 
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.HashMap;
 
 public class MAIRKeyboard {
@@ -215,6 +217,19 @@ public class MAIRKeyboard {
 		addToKeyMap(KeyEvent.VK_X);
 		addToKeyMap(KeyEvent.VK_Y);
 		addToKeyMap(KeyEvent.VK_Z);
+		try{
+			//now put everything in file
+			BufferedWriter w=new BufferedWriter(new FileWriter("keyboard_keys_available.txt"));
+			w.append("#Key code name that are accepted by MAIRM system.\n");
+			for (String name : keyMap.keySet()) {
+				w.append(name);
+				w.append("\n");
+			}
+			w.flush();
+			w.close();
+		}catch (Exception e) {
+			
+		}
 	}
 	
 	private static void addToKeyMap(int keyCode){
