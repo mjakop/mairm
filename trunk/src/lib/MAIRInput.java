@@ -26,6 +26,7 @@ public abstract class MAIRInput extends MAIRObject {
 	public abstract boolean connect() throws IOException;
 	public abstract boolean disconnect() throws IOException;
 	public abstract boolean cleanup();
+	public abstract void interruptWaiting();
 	public abstract InputStream getInputStream() throws IOException;
 	public abstract OutputStream getOutputStream() throws IOException;
 }

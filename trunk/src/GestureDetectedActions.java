@@ -1,3 +1,18 @@
+/***************************************************************************
+ *   Copyright (C) 2010 by                                                 *
+ *   	Matej Jakop <matej@jakop.si>                                       *
+ *      Gregor Kališnik <gregor@unimatrix-one.org>                         *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License version 3        *
+ *   as published by the Free Software Foundation.                         *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ ***************************************************************************/
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -5,6 +20,8 @@ import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import lib.MAIRKeyboard;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -55,13 +72,30 @@ public class GestureDetectedActions {
 					Node al=aList.item(j);
 					if (al.getNodeName().equalsIgnoreCase("exec")){
 						action.setExec(al.getTextContent());
-					}
+					}else if (al.getNodeName().equalsIgnoreCase("keys")) {
+		        		parseKeys(al,action);
+		        	}
 				}
 			}
 		}
 	}
 	
+	private static void parseKeys(Node n, GestureDetectedAction action){
+		NodeList l=n.getChildNodes();
+		for(int i=0;i<l.getLength();i++){
+			Node l1=l.item(i);
+			if (l1.getNodeName().equalsIgnoreCase("key")){
+				GestureDetectedActionKey key=new GestureDetectedActionKey();
+				String delayRelease=getAtributeValue(l1, "delayRelease");
+				key.setImediatellyRelease(delayRelease.equalsIgnoreCase("false"));
+				key.setKeyCode(MAIRKeyboard.stringToKeyCode(l1.getTextContent()));
+				action.addKey(key);
+			}
+		}
+	}
+	
 	public static boolean loadFromFile(String fileName) throws Exception{
+		actions.clear();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setValidating(false);
         factory.setNamespaceAware(false);
@@ -88,6 +122,18 @@ public class GestureDetectedActions {
 					buff.append("\t\t\t<exec>");
 					buff.append(item.getExec());
 					buff.append("</exec>\n");
+					buff.append("\t\t\t<keys>\n");
+					for(int j=0;j<item.getKeys().size();j++){
+						GestureDetectedActionKey k=item.getKeys().get(j);
+						String delayRelease="FALSE";
+						if (k.isImediatellyRelease()){
+							delayRelease="TRUE";
+						}
+						buff.append("\t\t\t\t<key delayRelease=\""+delayRelease+"\">");
+						buff.append(MAIRKeyboard.keyCodeToString(k.getKeyCode()));
+						buff.append("</key>\n");
+					}
+					buff.append("\t\t\t</keys>\n");
 					buff.append("\t\t</action>\n");
 				}
 			buff.append("\t</actions>\n");

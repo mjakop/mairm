@@ -15,11 +15,11 @@
 
 package lib;
 
-import java.awt.Robot;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.InterruptedIOException;
 import java.io.OutputStream;
 
 import javax.bluetooth.UUID;
@@ -28,6 +28,11 @@ import javax.microedition.io.StreamConnection;
 import javax.microedition.io.StreamConnectionNotifier;
 
 import lib.MAIRInputMessageMouse.ButtonStatus;
+import lib.MAIRInputMessageMouse.MouseState;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class MAIRInputBluetooth extends MAIRInput {
 
@@ -54,18 +59,28 @@ public class MAIRInputBluetooth extends MAIRInput {
 		return connectionString;
 	}
 	
+	
 	@Override
 	public boolean prepare() throws MAIRExceptionPrepare {
 		try{
 			streamConnNotifier = (StreamConnectionNotifier)Connector.open(connectionString);
 		}catch (Exception e) {
+			e.printStackTrace();
 			throw new MAIRExceptionPrepare();
 		}
 		return true;
 	}
 	
 	public boolean connect() throws IOException {
-		connection=streamConnNotifier.acceptAndOpen();
+		try{
+			connection=streamConnNotifier.acceptAndOpen();
+		}catch (InterruptedIOException e) {
+			//if we interrupt waiting input we get this exception
+			return false;
+		}catch (IOException e) {
+			//something more serious is .... 
+			return false;
+		}
 		return true;
 	}
 	
@@ -80,7 +95,9 @@ public class MAIRInputBluetooth extends MAIRInput {
 			outputStream=null;
 		}
 		bufferedReader=null;
-		connection.close();
+		if (connection!=null){
+			connection.close();
+		}
 		return true;
 	}
 	
@@ -117,53 +134,137 @@ public class MAIRInputBluetooth extends MAIRInput {
 		return bufferedReader;
 	}
 	
+	private int doubleToInt(Double d, int defaultV){
+		try{
+			return d.intValue();
+		}catch (Exception e) {
+			return defaultV;
+		}
+	}
+	
 	@Override
 	public MAIRInputMessage get()  throws IOException {
-		//TODO: Change to JSON format.
 		String line=getBufferedReader().readLine();
 		if (line==null){
 			return null;
 		} else{
 			//parse data
 			line=line.trim();
-			try{
-				MAIRInputMessageGesture gesture;
-				if (line.startsWith("#")==false){
-					String[] parts=line.split(";");
-					int x=Integer.parseInt(parts[0]);
-					int y=Integer.parseInt(parts[1]);
-					int z=Integer.parseInt(parts[2]);
-					gesture=new MAIRInputMessageGesture(x,y,z);
-				} else{
-					gesture=new MAIRInputMessageGesture(0, 0, 0);
-				}
-				if (line.startsWith("#levDOL")){
-					gesture.setStartGesture(true);
-				} else if (line.startsWith("#levGOR")){
-					gesture.setEndGesture(true);				
-				}
-				return gesture;
-			}catch (Exception e) {
-				
-			}
-			/*
-			 //MOUSE CONTROL
-			  try{
-					String[] parts=line.split(";");
-					int x=Integer.parseInt(parts[0]);
-					int y=Integer.parseInt(parts[1]);
-					int z=Integer.parseInt(parts[2]);
-					MAIRInputMessageMouse mouse=new MAIRInputMessageMouse(x,y,z);
-					if (line.startsWith("#levDOL")){
-						mouse.setLeftButtonStatus(ButtonStatus.BUTTON_DOWN);
-					}else if (line.startsWith("#levGOR")){
-						mouse.setLeftButtonStatus(ButtonStatus.BUTTON_UP);
+			if (line.startsWith("{")){
+				//json
+				//System.out.println(line);
+				try {
+					JSONParser p=new JSONParser();
+					Object o = p.parse(line);
+					if (o instanceof JSONObject){
+						JSONObject jobj=(JSONObject)o;
+						if (jobj.containsKey("mouse")){
+							//parse mouse moving info
+							JSONObject mObj=(JSONObject)jobj.get("mouse");
+							int x=doubleToInt((Double)mObj.get("x"),0);
+							int y=doubleToInt((Double)mObj.get("y"),0);
+							int z=doubleToInt((Double)mObj.get("z"),0);
+							MAIRInputMessageMouse m=new MAIRInputMessageMouse(x, y, z);
+							
+							String middleButton=(String)mObj.get("middlebutton");
+							//if is scrolling mode
+							if (middleButton!=null && middleButton.equalsIgnoreCase("scrolling")){
+								m.setState(MouseState.SCROLLING_MODE);
+							}
+							//left button
+							String leftButton=(String)mObj.get("leftbutton");
+							if (leftButton!=null){
+								if (leftButton.equalsIgnoreCase("down")){
+									m.setLeftButtonStatus(ButtonStatus.BUTTON_DOWN);
+								}else if (leftButton.equalsIgnoreCase("up")){
+									m.setLeftButtonStatus(ButtonStatus.BUTTON_UP);
+								}else {
+									//no change
+									m.setLeftButtonStatus(ButtonStatus.BUTTON_NONE);
+								}
+								//because it must go through
+								m.setIgnoreFilters(true);
+							}
+							//right button
+							String rightButton=(String)mObj.get("rightbutton");
+							if (rightButton!=null){
+								if (rightButton.equalsIgnoreCase("down")){
+									m.setRightButtonStatus(ButtonStatus.BUTTON_DOWN);
+								}else if (rightButton.equalsIgnoreCase("up")){
+									m.setRightButtonStatus(ButtonStatus.BUTTON_UP);
+								}else {
+									//no change
+									m.setRightButtonStatus(ButtonStatus.BUTTON_NONE);
+								}
+								//because it must go through
+								m.setIgnoreFilters(true);								
+							}
+							return m;
+						} else if (jobj.containsKey("gesture")){
+							JSONObject gObj=(JSONObject)jobj.get("gesture");
+							int x=doubleToInt((Double)gObj.get("x"),0);
+							int y=doubleToInt((Double)gObj.get("y"),0);
+							int z=doubleToInt((Double)gObj.get("z"),0);
+							MAIRInputMessageGesture m=new MAIRInputMessageGesture(x, y, z);
+							String start=(String)gObj.get("start");
+							if (start!=null){
+								m.setStartGesture(start.equalsIgnoreCase("true"));
+							}else {
+								//because it must be start or end and not both at the same time
+								String end=(String)gObj.get("end");
+								if(end!=null){
+									m.setEndGesture(end.equalsIgnoreCase("true"));
+								}
+							}
+							return m;
+						} else if(jobj.containsKey("keyboard")){
+							JSONObject kObj=(JSONObject)jobj.get("keyboard");
+							String key=(String)kObj.get("key");
+							if (key!=null){
+								int keyCode=MAIRKeyboard.stringToKeyCode(key);
+								if (keyCode > 0){
+									MAIRInputMessageKeyboard keyboard=new MAIRInputMessageKeyboard(keyCode);
+									keyboard.setIgnoreFilters(true);
+									return  keyboard;
+								}
+							}
+						}
 					}
-					return mouse;
-			}catch (Exception e) {
-			}*/
+				} catch (ParseException e) {
+
+				}
+			}else{
+				try{
+					MAIRInputMessageGesture gesture;
+					if (line.startsWith("#")==false){
+						String[] parts=line.split(";");
+						int x=Integer.parseInt(parts[0]);
+						int y=Integer.parseInt(parts[1]);
+						int z=Integer.parseInt(parts[2]);
+						gesture=new MAIRInputMessageGesture(x,y,z);
+					} else{
+						gesture=new MAIRInputMessageGesture(0, 0, 0);
+					}
+					if (line.startsWith("#levDOL")){
+						gesture.setStartGesture(true);
+					} else if (line.startsWith("#levGOR")){
+						gesture.setEndGesture(true);				
+					}
+					return gesture;
+				}catch (Exception e) {
+				
+				}
+			}
 			return new MAIRInputMessage();
 		}
+	}
+	
+	@Override
+	public void interruptWaiting() {
+		try {
+			streamConnNotifier.close();
+		} catch (IOException e) {
+		}		
 	}
 
 }
