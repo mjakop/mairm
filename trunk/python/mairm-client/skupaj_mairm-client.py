@@ -1,6 +1,6 @@
+# -*- coding: utf-8 -*-
 import e32
 import btsocket, appuifw, key_codes
-
 import sensor
 
 class AbstractSensor:
@@ -36,12 +36,38 @@ class OldSensor(AbstractSensor):
   def cleanup(self):
     self.sensor.disconnect()
 
+class S605thSensor(AbstractSensor):
+  def __init__(self):
+    self.sensor = sensor.AccelerometerXYZAxisData()
+    self.sensor.set_measure_range(0)
+    self.cb = None
+  
+    self.sensor.set_callback(data_callback = self.coord_cb)
+    self.sensor.start_listening()
+    self.count = 0
+  
+  def coord_cb(self):
+    if self.cb is None:
+      return
+    
+    # Need to switch x and y coordinates for 5800
+    self.cb(self.sensor.y * 2, self.sensor.x * 2, self.sensor.z * 2)
+  
+  def set_callback(self, cb):
+    self.cb = cb
+  
+  def cleanup(self):
+    self.sensor.stop_listening()
+
 def init_sensor():
   try:
     return OldSensor()
   except:
-    raise Exception('No supported accelometer sensors API.')
-
+    try:
+      return S605thSensor()
+    except:
+      raise Exception('No supported accelometer sensors API.')
+	  
 
 def dummy():
   pass
@@ -53,73 +79,94 @@ class Mode:
 
 class Application:
   def __init__(self):
+    self.locker = e32.Ao_lock()
     self.sensor = init_sensor()
+    self.buffer = ''
     
     self.bt_connect()
     self.mode = Mode.MOUSE
     
-    sensor.set_callback(sensor_event)
+    self.sensor.set_callback(self.sensor_event)
+    
+    self.exit = False
+  
+  def loop(self):
+    while not self.exit:
+      self.locker.wait()
     
   def bt_connect(self):
-    self.sock = btsocket.socket(btsocket.AF_BT,btsocket.SOCK_STREAM)
+    self.sock = btsocket.socket(btsocket.AF_BT, btsocket.SOCK_STREAM)
     target = ''
     (address, services) = btsocket.bt_discover()
-    if len(services) > 1:
-      choices = services.keys()
-      choices.sort()
-      choice = appuifw.popup_menu([unicode(services[x]) + ": " + x for x in choices], u'Choose port:')
-      target = (address, services[choices[choice]])
-    else:
-      target = (address,services.values()[0])
+    choices = services.keys()
+    choices.sort()
+    choice = appuifw.popup_menu([unicode(services[x]) + ": " + x for x in choices], u'Choose port:')
+    target = (address, services[choices[choice]])
   
-    print "Povezujem..." + str(target)
     self.sock.connect(target)
-    print "OK."
 
-  def sensor_event(x, y, z):
+  def sensor_event(self, x, y, z):    
     text = '{"mouse":{"x": %f, "y": %f, "z": %f' % (x, y, z)
     if self.mode == Mode.SCROLLING:
       text += ', "middlebutton": "scrolling"'
     
-    test += '}}'
-    self.sock.send(text)
+    text += '}}\n'
+    
+    try:
+      self.sock.send(self.buffer + text)
+      self.buffer = ''
+    except:
+      pass
   
   def close(self):
     self.sensor.cleanup()
+    self.socket.close()
+    self.exit = True
+    appuifw.body = None
+    self.locker.signal()
 
-  def keypress(event):
+  def keypress(self, event):    
     if event["scancode"] == key_codes.EScancodeLeftSoftkey:
-      text = '{"mouse":{'
-      text += '"leftbutton":'
+      text = '{"mouse":{"leftbutton":'
       if event["type"] == appuifw.EEventKeyDown:
-        text += "down"
+        text += '"down"'
       elif event["type"] == appuifw.EEventKeyUp:
-        text += "up"
+        text += '"up"'
     elif event["scancode"] == key_codes.EScancodeRightSoftkey:
-      text = '{"mouse":{'
-      text += '"rightbutton":'
+      text = '{"mouse":{"rightbutton":'
       if event["type"] == appuifw.EEventKeyDown:
         text += "down"
       elif event["type"] == appuifw.EEventKeyUp:
         text += "up"
-    elif event["scancode"] == key_codes.EScancodeYes:
+    elif event["scancode"] == key_codes.EScancodeSelect:
       if event["type"] == appuifw.EEventKeyUp:
         if self.mode == Mode.MOUSE:
           self.mode = Mode.SCROLLING
         else:
           self.mode = Mode.MOUSE
-  
-    text += "}}"
-  
-    self.sock.send(text)
+      return
+    elif event["scancode"] == key_codes.EScancodeNo:
+      appuifw.app.set_exit()
+      return
+    else:
+      return
+    
+    text += "}}\n"
+    
+    try:
+      self.buffer += text
+      self.sock.send(self.buffer)
+      self.buffer = ''
+    except:
+      pass
 
 # Init sensors
-
 app = Application()
 
 appuifw.title = 'MairM Client'
-canvas = appuifw.Canvas(event_callback = app.keypress)
+appuifw.app.orientation = 'portrait'
+app.canvas = appuifw.Canvas(event_callback = app.keypress)
 appuifw.app.exit_key_handler = dummy
-appuifw.app.body = canvas
-e32.ao_sleep(15000)
+appuifw.app.body = app.canvas
+app.loop()
 app.close()

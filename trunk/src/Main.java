@@ -82,12 +82,20 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		int i=1000+(int)(Math.random()*1000);
 		MAIRInput input=new MAIRInputBluetooth("MAIR"+i);
 		m.setInput(input);
-		m.getGestures().loadFromFile("znanje.txt");
+		try{
+			m.getGestures().loadFromFile("znanje.txt");
+		}catch (Exception e) {
+			
+		}
 		m.setEventListener(this);
 		m.setInputMessageListener(this);
 		m.getGestures().addListener(this);
 		m.start();
-		GestureDetectedActions.loadFromFile(gestureActionsFileName);
+		try{
+			GestureDetectedActions.loadFromFile(gestureActionsFileName);
+		}catch (Exception e) {
+			
+		}
 		//synchronize databases
 		String[] learned=MAIRGestures.getLearnedGestureNames();
 		for(int j=0;j<learned.length;j++){
@@ -171,6 +179,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 				myTrayIcon.addMouseListener(listener);
 			}catch (Exception e) {
 				e.printStackTrace();
+				System.exit(-1);
 			}
 		}
 		return myTrayIcon;
@@ -229,7 +238,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	
 	public JGraph getGraphX(){
 		if (graphX==null){
-			graphX=new JGraph(150);
+			graphX=new JGraph(50);
 			graphX.setSize(10, 150);
 			graphX.setTextTitle("X axle");
 		}
@@ -238,7 +247,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	
 	public JGraph getGraphY(){
 		if (graphY==null){
-			graphY=new JGraph(150);
+			graphY=new JGraph(50);
 			graphY.setSize(100, 150);
 			graphY.setTextTitle("Y axle");
 		}
@@ -247,7 +256,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	
 	public JGraph getGraphZ(){
 		if (graphZ==null){
-			graphZ=new JGraph(150);
+			graphZ=new JGraph(50);
 			graphZ.setSize(10, 150);
 			graphZ.setTextTitle("Z axle");
 		}
@@ -256,7 +265,7 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 	
 	public JGraph getGraphSize(){
 		if (graphSize==null){
-			graphSize=new JGraph(150);
+			graphSize=new JGraph(50);
 			graphSize.setSize(10, 150);
 			graphSize.setTextTitle("Size of vector");
 		}

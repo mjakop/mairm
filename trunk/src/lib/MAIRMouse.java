@@ -28,6 +28,8 @@ public class MAIRMouse extends MAIRObject {
 	private Robot robot;
 	private MAIRAverageQue avgX=new MAIRAverageQue(AVERAGE_QUE_LENGTH);
 	private MAIRAverageQue avgY=new MAIRAverageQue(AVERAGE_QUE_LENGTH);
+	private int countScrolling=0;
+	private int ignoreScrolling=0;
 	
 	private Robot getRobot() {
 		if (robot==null){
@@ -97,6 +99,7 @@ public class MAIRMouse extends MAIRObject {
 	public void processMoveScrolling(MAIRInputMessageMouse msg){
 		if (msg.getState()==MouseState.SCROLLING_MODE){
 			//mouse scrolling mode
+			countScrolling=(countScrolling+1)%256;
 			double dx=0;
 			int dirX; //-1 forward, 1 backward
 			//calculate direction
@@ -109,9 +112,21 @@ public class MAIRMouse extends MAIRObject {
 				dx=1;
 			}else{
 				dx=0;
+				ignoreScrolling=10;
 			}
-			if (dx > 0){
-				scrollMouse(dx*dirX);
+			if (dx > 0 && ignoreScrolling > -1){
+				if (ignoreScrolling == 0){
+					scrollMouse(dx*dirX);
+				}else if (countScrolling % ignoreScrolling == 0){
+					scrollMouse(dx*dirX);
+				}
+				if (ignoreScrolling > 0 && Math.abs(msg.getAccX()) > 95){
+					if (Math.abs(msg.getAccX()) > 140){
+						ignoreScrolling=0;
+					}else{
+						ignoreScrolling--;
+					}
+				}
 			}
 		} else { 
 			//mouse moving mode
@@ -126,9 +141,9 @@ public class MAIRMouse extends MAIRObject {
 				dirX=-1;
 			}
 			if (msg.getAccX() < 0){
-				dirY=-1;
-			} else {
 				dirY=1;
+			} else {
+				dirY=-1;
 			}
 			dx=getValueIfGratherThan(Math.abs(msg.getAccY()),40,0);
 			dy=getValueIfGratherThan(Math.abs(msg.getAccX()),40,0);
@@ -136,10 +151,10 @@ public class MAIRMouse extends MAIRObject {
 			double factorChangeX=1.0;
 			double factorChangeY=1.0;
 			if (dx > 0 && dx < 100){
-				factorChangeX=0.1;
+				factorChangeX=0.05;
 			}
 			if (dy > 0 && dy < 100){
-				factorChangeY=0.1;
+				factorChangeY=0.05;
 			}
 			if(dx > 0 && dx < 200){
 				factorChangeX=dx/200.0;
