@@ -2,15 +2,18 @@
 import e32
 import btsocket, appuifw, key_codes
 
-from sensors import AbstractSensor, init_sensor
+#from sensors import AbstractSensor, init_sensor
 
 def dummy():
   pass
 
+def test():
+  audio.say(u'Wiiii')
+
 class Mode:
-  MOUSE = 0
-  SCROLLING = 1
-  GESTURE = 2
+  MOUSE = u'Mouse'
+  SCROLLING = u'Scrolling'
+  GESTURE = u'Gesture'
 
 class Application:
   def __init__(self):
@@ -18,33 +21,42 @@ class Application:
     self.sensor = init_sensor()
     self.buffer = ''
     
-    self.bt_connect()
     self.mode = Mode.MOUSE
+    self.sock = None
     
     self.sensor.set_callback(self.sensor_event)
     
     self.exit = False
   
   def loop(self):
+    # Initialize gui
+    self.init_gui()
     while not self.exit:
+      self.redraw_event()
       self.locker.wait()
     
   def bt_connect(self):
-    self.sock = btsocket.socket(btsocket.AF_BT, btsocket.SOCK_STREAM)
-    target = ''
-    (address, services) = btsocket.bt_discover()
-    choices = services.keys()
-    choices.sort()
-    choice = appuifw.popup_menu([unicode(services[x]) + ": " + x for x in choices], u'Choose port:')
-    target = (address, services[choices[choice]])
+    try:
+      target = ''
+      (address, services) = btsocket.bt_discover()
+      choices = services.keys()
+      choices.sort()
+      choice = appuifw.popup_menu([unicode(services[x]) + ": " + x for x in choices], u'Choose port:')
+      target = (address, services[choices[choice]])
   
-    self.sock.connect(target)
+      self.sock = btsocket.socket(btsocket.AF_BT, btsocket.SOCK_STREAM)
+      self.sock.connect(target)
+      return True
+    except:
+      if self.sock:
+        del self.sock
+      appuifw.note(u'Failed to connect', 'error')
+      return False
 
   def sensor_event(self, x, y, z):    
     text = '{"mouse":{"x": %f, "y": %f, "z": %f' % (x, y, z)
     if self.mode == Mode.SCROLLING:
       text += ', "middlebutton": "scrolling"'
-    
     text += '}}\n'
     
     try:
@@ -55,32 +67,81 @@ class Application:
   
   def close(self):
     self.sensor.cleanup()
-    self.socket.close()
+    if self.sock:
+      self.sock.close()
     self.exit = True
     appuifw.body = None
     self.locker.signal()
+  
+  def init_gui(self):
+    if not appuifw.touch_enabled():
+      self.buttons = None
+      return
+    
+    size = self.canvas.size
+    top = 40
+    bottom = size[1]
+    space = 20
+    width = (size[0] - 2 * space) / 3
+    
+    self.buttons = ((0, top), (width, bottom),
+                    (width + space, top), (width * 2 + space, bottom),
+                    (width * 2 + space * 2, top), (width * 3 + space * 2, bottom))
+  
+  def simulate_softkey(self, event):
+    if self.buttons is None:
+      return (None, None)
+    
+    if event['type'] == key_codes.EButton1Down:
+      type = appuifw.EEventKeyDown
+    elif event['type'] == key_codes.EButton1Up:
+      type = appuifw.EEventKeyUp
+    else:
+      return (None, None)
+    
+    if (event['pos'] >= self.buttons[0]) and (event['pos'] <= self.buttons[1]):
+      return (key_codes.EScancodeLeftSoftkey, type)
+    elif (event['pos'] >= self.buttons[2]) and (event['pos'] <= self.buttons[3]):
+      return (key_codes.EScancodeSelect, type)
+    elif (event['pos'] >= self.buttons[4]) and (event['pos'] <= self.buttons[5]):
+      return (key_codes.EScancodeRightSoftkey, type)
+    else:
+      return (None, None)
+  
+  def redraw_event(self):
+    self.canvas.clear()
+    
+    if self.buttons is not None:
+      self.canvas.rectangle(self.buttons, fill=(200, 200, 200))
+    
+    self.canvas.text((0, 12), u'Mode: %s' % self.mode)
 
-  def keypress(self, event):    
-    if event["scancode"] == key_codes.EScancodeLeftSoftkey:
+  def keypress(self, event):
+    if 'pos' in event.keys():
+      translated = self.simulate_softkey(event)
+      event['scancode'] = translated[0]
+      event['type'] = translated[1]
+
+    if event['scancode'] == key_codes.EScancodeLeftSoftkey:
       text = '{"mouse":{"leftbutton":'
-      if event["type"] == appuifw.EEventKeyDown:
+      if event['type'] == appuifw.EEventKeyDown:
+        text += '"down"'
+      elif event['type'] == appuifw.EEventKeyUp:
+        text += '"up"'
+    elif event['scancode'] == key_codes.EScancodeRightSoftkey:
+      text = '{"mouse":{"rightbutton":'
+      if event['type'] == appuifw.EEventKeyDown:
         text += '"down"'
       elif event["type"] == appuifw.EEventKeyUp:
         text += '"up"'
-    elif event["scancode"] == key_codes.EScancodeRightSoftkey:
-      text = '{"mouse":{"rightbutton":'
-      if event["type"] == appuifw.EEventKeyDown:
-        text += "down"
-      elif event["type"] == appuifw.EEventKeyUp:
-        text += "up"
-    elif event["scancode"] == key_codes.EScancodeSelect:
-      if event["type"] == appuifw.EEventKeyUp:
+    elif event['scancode'] == key_codes.EScancodeSelect:
+      if event['type'] == appuifw.EEventKeyUp:
         if self.mode == Mode.MOUSE:
           self.mode = Mode.SCROLLING
         else:
           self.mode = Mode.MOUSE
       return
-    elif event["scancode"] == key_codes.EScancodeNo:
+    elif event['scancode'] == key_codes.EScancodeNo:
       appuifw.app.set_exit()
       return
     else:
@@ -94,14 +155,19 @@ class Application:
       self.buffer = ''
     except:
       pass
+    
+    self.locker.signal()
 
 # Init sensors
 app = Application()
 
 appuifw.title = 'MairM Client'
 appuifw.app.orientation = 'portrait'
-app.canvas = appuifw.Canvas(event_callback = app.keypress)
+appuifw.app.screen = 'full'
+appuifw.app.directional_pad = False
+app.canvas = appuifw.Canvas(event_callback = app.keypress, redraw_callback = lambda rect:app.redraw_event)
 appuifw.app.exit_key_handler = dummy
 appuifw.app.body = app.canvas
-app.loop()
+if app.bt_connect():
+  app.loop()
 app.close()
