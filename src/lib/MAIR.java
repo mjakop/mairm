@@ -81,6 +81,7 @@ public class MAIR implements Runnable {
 
 	public void run() {
 		try {
+			Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 			input.prepare();
 			while(doWork){
 				if (input.connect()==false){
