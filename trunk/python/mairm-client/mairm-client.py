@@ -14,12 +14,15 @@ class Mode:
   MOUSE = u'Mouse'
   SCROLLING = u'Scrolling'
   GESTURE = u'Gesture'
+  SGESTURE = u'Suspended gesture'
 
 class Application:
   def __init__(self):
     self.locker = e32.Ao_lock()
+    self.sleeper = e32.Ao_timer()
     self.sensor = init_sensor()
     self.buffer = ''
+    self.suspend_buffer = ''
     
     self.mode = Mode.MOUSE
     self.sock = None
@@ -53,11 +56,21 @@ class Application:
       appuifw.note(u'Failed to connect', 'error')
       return False
 
-  def sensor_event(self, x, y, z):    
-    text = '{"mouse":{"x": %f, "y": %f, "z": %f' % (x, y, z)
+  def sensor_event(self, x, y, z):
+    if self.mode == Mode.SGESTURE or self.mode == Mode.GESTURE:
+      text = '{"gesture":{'
+      if self.suspend_buffer == '':
+        text += '"start":"true"'
+    else:
+      text = '{"mouse":{'
+    
+    text += '"x": %f, "y": %f, "z": %f' % (x, y, z)
     if self.mode == Mode.SCROLLING:
       text += ', "middlebutton": "scrolling"'
     text += '}}\n'
+    
+    if self.mode == Mode.SGESTURE:
+      self.suspend_buffer += text
     
     try:
       self.sock.send(self.buffer + text)
@@ -116,6 +129,12 @@ class Application:
     
     self.canvas.text((0, 12), u'Mode: %s' % self.mode)
 
+  def resume(self):
+    self.mode = Mode.GESTURE
+    self.buffer += self.suspend_buffer
+    self.suspend_buffer = ''
+    self.locker.signal()
+
   def keypress(self, event):
     if 'pos' in event.keys():
       translated = self.simulate_softkey(event)
@@ -135,11 +154,18 @@ class Application:
       elif event["type"] == appuifw.EEventKeyUp:
         text += '"up"'
     elif event['scancode'] == key_codes.EScancodeSelect:
-      if event['type'] == appuifw.EEventKeyUp:
-        if self.mode == Mode.MOUSE:
+      if self.mode != Mode.SCROLLING and event['type'] == appuifw.EEventKeyDown:
+        self.mode = Mode.SGESTURE
+        self.sleeper.after(0.1, self.resume)
+      elif event['type'] == appuifw.EEventKeyUp:
+        if self.mode == Mode.SGESTURE:
+          self.sleeper.cancel()
           self.mode = Mode.SCROLLING
         else:
+          if self.mode == Mode.GESTURE:
+            self.buffer += '{"gesture":{"end":"true"}}'
           self.mode = Mode.MOUSE
+      self.locker.signal()
       return
     elif event['scancode'] == key_codes.EScancodeNo:
       appuifw.app.set_exit()
