@@ -60,7 +60,7 @@ class Application:
     if self.mode == Mode.SGESTURE or self.mode == Mode.GESTURE:
       text = '{"gesture":{'
       if self.mode == Mode.SGESTURE and self.suspend_buffer == '':
-        text += '"start":"true,"'
+        text += '"start":"true",'
     else:
       text = '{"mouse":{'
     
