@@ -71,6 +71,7 @@ class Application:
     
     if self.mode == Mode.SGESTURE:
       self.suspend_buffer += text
+      return
     
     try:
       self.sock.send(self.buffer + text)
