@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.9)  9 MAY 2010 10:37
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.9)  9 MAY 2010 12:16
 entering extended mode
 **porocilo
-(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\porocilo.tex
+(D:\Programiranje\java\MAIRM\documentation_slovenian\porocilo.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman, ngerman, german-x-2009-06-19, ngerman-x-2009-06-19, french, loaded.
@@ -164,7 +164,7 @@ File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
 Package: listings 2007/02/22 1.4 (Carsten Heinz)
 
-(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\porocilo.aux)
+(D:\Programiranje\java\MAIRM\documentation_slovenian\porocilo.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
 LaTeX Font Info:    ... okay on input line 8.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
@@ -217,11 +217,11 @@ Overfull \hbox (17.62482pt too wide) in paragraph at lines 40--48
 
 {C:/Documents and Settings/Matej/Local Settings/Application Data/MiKTeX/2.8/pdf
 tex/config/pdftex.map}]
-(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\porocilo.toc)
+(D:\Programiranje\java\MAIRM\documentation_slovenian\porocilo.toc)
 \tf@toc=\write3
  [1]
-(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/opis_teme_probl
-emskega_podrocja.tex
+(D:\Programiranje\java\MAIRM\documentation_slovenian\sections/opis_teme_problem
+skega_podrocja.tex
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 3.
  ("C:\Program Files\MiKTeX 2.8\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
@@ -229,54 +229,41 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 3.
 )
-(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/izbrani_cilji_z
-ahteve_omejitve.tex)
-(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/arhitektura_res
-itve.tex)
-(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/izvedba_resitve
-_problemi.tex)
-(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/nadaljnje_delo.
-tex)
-(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/navodila_za_upo
-rabo.tex [2]
+(D:\Programiranje\java\MAIRM\documentation_slovenian\sections/izbrani_cilji_zah
+teve_omejitve.tex)
+(D:\Programiranje\java\MAIRM\documentation_slovenian\sections/arhitektura_resit
+ve.tex)
+(D:\Programiranje\java\MAIRM\documentation_slovenian\sections/izvedba_resitve_p
+roblemi.tex)
+(D:\Programiranje\java\MAIRM\documentation_slovenian\sections/nadaljnje_delo.te
+x)
+(D:\Programiranje\java\MAIRM\documentation_slovenian\sections/navodila_za_upora
+bo.tex [2]
 Overfull \hbox (3.49275pt too wide) in paragraph at lines 26--27
 []\OT1/cmr/m/n/12 Pozenemo pro-gram MAIRM (ce smo na-mestili z na-mestitvenim
  pro-gramom) oziroma
  []
 
-[3] [4]) [5]
-Underfull \hbox (badness 10000) in paragraph at lines 79--80
-[]\OT1/cmr/m/n/12 Scheduling a re-cur-ring task in a de-vice drive.[Online].[Ci
-tirano:
- []
+[3] [4]) [5] [6]
+(D:\Programiranje\java\MAIRM\documentation_slovenian\porocilo.aux)
 
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Underfull \hbox (badness 10000) in paragraph at lines 79--80
-\OT1/cmr/m/n/12 28. jan-uar 2010; 17:00]. Dostopno na splet-nem
- []
-
-
-Overfull \hbox (286.37387pt too wide) in paragraph at lines 79--80
-\OT1/cmr/m/n/12 naslovu:http://groups.google.si/group/mpc.lists.freebsd.hackers
-/browse[]thread/thread/fffc2a9181202627/6a6edd1ae2654fc3?hl=sl&ie=UTF-
- []
-
-[6] (D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\porocilo.aux) ) 
+ ) 
 Here is how much of TeX's memory you used:
- 3645 strings out of 495285
- 53606 string characters out of 3180341
+ 3644 strings out of 495285
+ 53536 string characters out of 3180341
  130321 words of memory out of 3000000
- 6792 multiletter control sequences out of 15000+200000
+ 6791 multiletter control sequences out of 15000+200000
  8201 words of font info for 29 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
  33i,6n,49p,380b,243s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/P
-rogram Files/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program F
-iles/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiK
-TeX 2.8/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.8/f
-onts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.8/fonts/type
-1/public/amsfonts/cm/cmsy10.pfb>
-Output written on porocilo.pdf (7 pages, 79121 bytes).
+<C:/Program Files/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
+ogram Files/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Fi
+les/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTe
+X 2.8/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.8/fon
+ts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on porocilo.pdf (7 pages, 76850 bytes).
 PDF statistics:
  46 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
