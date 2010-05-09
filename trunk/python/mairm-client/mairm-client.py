@@ -175,6 +175,10 @@ class Application:
       return
     
     text += "}}\n"
+
+    # Supress clicks in scrolling and gesture mode
+    if self.mode != Mode.MOUSE:
+      return
     
     try:
       self.buffer += text
