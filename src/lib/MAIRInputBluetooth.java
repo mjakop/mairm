@@ -201,6 +201,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 							}
 							return m;
 						} else if (jobj.containsKey("gesture")){
+							System.out.println(line);
 							JSONObject gObj=(JSONObject)jobj.get("gesture");
 							int x=doubleToInt((Double)gObj.get("x"),0);
 							int y=doubleToInt((Double)gObj.get("y"),0);

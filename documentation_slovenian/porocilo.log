@@ -1,0 +1,284 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.9)  9 MAY 2010 10:37
+entering extended mode
+**porocilo
+(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\porocilo.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman, ngerman, german-x-2009-06-19, ngerman-x-2009-06-19, french, loaded.
+("C:\Program Files\MiKTeX 2.8\tex\latex\base\article.cls"
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+("C:\Program Files\MiKTeX 2.8\tex\latex\base\size12.clo"
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("C:\Program Files\MiKTeX 2.8\tex\generic\babel\babel.sty"
+Package: babel 2008/07/06 v3.8l The Babel package
+
+*************************************
+* Local config file bblopts.cfg used
+*
+("C:\Program Files\MiKTeX 2.8\tex\latex\00miktex\bblopts.cfg"
+File: bblopts.cfg 2006/07/31 v1.0 MiKTeX 'babel' configuration
+)
+("C:\Program Files\MiKTeX 2.8\tex\generic\babel\slovene.ldf"
+Language: slovene 2005/03/31 v1.2m Slovene support from the babel system
+
+("C:\Program Files\MiKTeX 2.8\tex\generic\babel\babel.def"
+File: babel.def 2008/07/06 v3.8l Babel common definitions
+\babel@savecnt=\count87
+\U@D=\dimen103
+)
+
+Package babel Warning: No hyphenation patterns were loaded for
+(babel)                the language `Slovene'
+(babel)                I will use the patterns loaded for \language=0 instead.
+
+\l@slovene = a dialect from \language0
+Package babel Info: Making " an active character on input line 79.
+)) ("C:\Program Files\MiKTeX 2.8\tex\latex\base\inputenc.sty"
+Package: inputenc 2008/03/30 v1.1d Input encoding file
+\inpenc@prehook=\toks14
+\inpenc@posthook=\toks15
+
+("C:\Program Files\MiKTeX 2.8\tex\latex\base\cp1250.def"
+File: cp1250.def 2008/03/30 v1.1d Input encoding file
+))
+("C:\Program Files\MiKTeX 2.8\tex\latex\graphics\color.sty"
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+("C:\Program Files\MiKTeX 2.8\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+
+("C:\Program Files\MiKTeX 2.8\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2010/02/14 v0.04n Graphics/color for pdfTeX
+\Gread@gobject=\count88
+))
+("C:\Documents and Settings\Matej\Application Data\MiKTeX\2.8\tex\latex\pdfpage
+s\pdfpages.sty"
+Package: pdfpages 2010/01/12 v0.4j Insert pages of external PDF documents (AM)
+ ("C:\Program Files\MiKTeX 2.8\tex\latex\base\ifthen.sty"
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+("C:\Program Files\MiKTeX 2.8\tex\latex\tools\calc.sty"
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count89
+\calc@Bcount=\count90
+\calc@Adimen=\dimen104
+\calc@Bdimen=\dimen105
+\calc@Askip=\skip43
+\calc@Bskip=\skip44
+LaTeX Info: Redefining \setlength on input line 76.
+LaTeX Info: Redefining \addtolength on input line 77.
+\calc@Ccount=\count91
+\calc@Cskip=\skip45
+)
+("C:\Documents and Settings\Matej\Application Data\MiKTeX\2.8\tex\latex\eso-pic
+\eso-pic.sty"
+Package: eso-pic 2009/10/07 v2.0a eso-pic (RN)
+ ("C:\Program Files\MiKTeX 2.8\tex\generic\oberdiek\atbegshi.sty"
+Package: atbegshi 2010/03/25 v1.12 At begin shipout hook (HO)
+
+("C:\Program Files\MiKTeX 2.8\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+)
+("C:\Program Files\MiKTeX 2.8\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2010/04/16 v1.6 LaTeX kernel commands for general use (HO)
+)
+("C:\Program Files\MiKTeX 2.8\tex\generic\oberdiek\ifpdf.sty"
+Package: ifpdf 2010/01/28 v2.1 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in pdf mode detected.
+))
+("C:\Program Files\MiKTeX 2.8\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks16
+))
+("C:\Program Files\MiKTeX 2.8\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.8\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.8\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Program Files\MiKTeX 2.8\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+)
+\Gin@req@height=\dimen106
+\Gin@req@width=\dimen107
+)
+("C:\Documents and Settings\Matej\Application Data\MiKTeX\2.8\tex\latex\pdfpage
+s\pppdftex.def"
+File: pppdftex.def 2010/01/12 v0.4j Pdfpages driver for pdfTeX (AM)
+)
+\AM@pagebox=\box26
+\AM@toc@title=\toks17
+\c@AM@survey=\count92
+\AM@templatesizebox=\box27
+)
+("C:\Documents and Settings\Matej\Application Data\MiKTeX\2.8\tex\latex\preprin
+t\fullpage.sty"
+Package: fullpage 1999/02/23 1.1 (PWD)
+\FP@margin=\skip46
+)
+("C:\Documents and Settings\Matej\Application Data\MiKTeX\2.8\tex\latex\listing
+s\listings.sty"
+\lst@mode=\count93
+\lst@gtempboxa=\box28
+\lst@token=\toks18
+\lst@length=\count94
+\lst@currlwidth=\dimen108
+\lst@column=\count95
+\lst@pos=\count96
+\lst@lostspace=\dimen109
+\lst@width=\dimen110
+\lst@newlines=\count97
+\lst@lineno=\count98
+\lst@maxwidth=\dimen111
+
+("C:\Documents and Settings\Matej\Application Data\MiKTeX\2.8\tex\latex\listing
+s\lstmisc.sty"
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+\c@lstnumber=\count99
+\lst@skipnumbers=\count100
+\lst@framebox=\box29
+)
+("C:\Documents and Settings\Matej\Application Data\MiKTeX\2.8\tex\latex\listing
+s\listings.cfg"
+File: listings.cfg 2007/02/22 1.4 listings configuration
+))
+Package: listings 2007/02/22 1.4 (Carsten Heinz)
+
+(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\porocilo.aux)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+
+("C:\Program Files\MiKTeX 2.8\tex\context\base\supp-pdf.tex"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count101
+\scratchdimen=\dimen112
+\scratchbox=\box30
+\nofMPsegments=\count102
+\nofMParguments=\count103
+\everyMPshowfont=\toks19
+\MPscratchCnt=\count104
+\MPscratchDim=\dimen113
+\MPnumerator=\count105
+\everyMPtoPDFconversion=\toks20
+)
+\AtBeginShipoutBox=\box31
+\c@lstlisting=\count106
+
+("C:\Documents and Settings\Matej\Application Data\MiKTeX\2.8\tex\latex\listing
+s\lstlang1.sty"
+File: lstlang1.sty 2004/09/05 1.3 listings language file
+)
+("C:\Documents and Settings\Matej\Application Data\MiKTeX\2.8\tex\latex\listing
+s\lstmisc.sty"
+File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 46.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 46.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 46.
+
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 40--48
+[]$[]$ 
+ []
+
+[1
+
+{C:/Documents and Settings/Matej/Local Settings/Application Data/MiKTeX/2.8/pdf
+tex/config/pdftex.map}]
+(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\porocilo.toc)
+\tf@toc=\write3
+ [1]
+(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/opis_teme_probl
+emskega_podrocja.tex
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 3.
+ ("C:\Program Files\MiKTeX 2.8\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 3.
+)
+(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/izbrani_cilji_z
+ahteve_omejitve.tex)
+(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/arhitektura_res
+itve.tex)
+(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/izvedba_resitve
+_problemi.tex)
+(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/nadaljnje_delo.
+tex)
+(D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\sections/navodila_za_upo
+rabo.tex [2]
+Overfull \hbox (3.49275pt too wide) in paragraph at lines 26--27
+[]\OT1/cmr/m/n/12 Pozenemo pro-gram MAIRM (ce smo na-mestili z na-mestitvenim
+ pro-gramom) oziroma
+ []
+
+[3] [4]) [5]
+Underfull \hbox (badness 10000) in paragraph at lines 79--80
+[]\OT1/cmr/m/n/12 Scheduling a re-cur-ring task in a de-vice drive.[Online].[Ci
+tirano:
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 79--80
+\OT1/cmr/m/n/12 28. jan-uar 2010; 17:00]. Dostopno na splet-nem
+ []
+
+
+Overfull \hbox (286.37387pt too wide) in paragraph at lines 79--80
+\OT1/cmr/m/n/12 naslovu:http://groups.google.si/group/mpc.lists.freebsd.hackers
+/browse[]thread/thread/fffc2a9181202627/6a6edd1ae2654fc3?hl=sl&ie=UTF-
+ []
+
+[6] (D:\Dokumenti\Fax\3_letnik_2009_2010\os2\dokumentacija\porocilo.aux) ) 
+Here is how much of TeX's memory you used:
+ 3645 strings out of 495285
+ 53606 string characters out of 3180341
+ 130321 words of memory out of 3000000
+ 6792 multiletter control sequences out of 15000+200000
+ 8201 words of font info for 29 fonts, out of 3000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 33i,6n,49p,380b,243s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/P
+rogram Files/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program F
+iles/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiK
+TeX 2.8/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.8/f
+onts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.8/fonts/type
+1/public/amsfonts/cm/cmsy10.pfb>
+Output written on porocilo.pdf (7 pages, 79121 bytes).
+PDF statistics:
+ 46 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

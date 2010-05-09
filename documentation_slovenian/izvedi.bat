@@ -1,0 +1,2 @@
+pdflatex porocilo
+PAUSE
