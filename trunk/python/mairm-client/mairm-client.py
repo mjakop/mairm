@@ -59,8 +59,8 @@ class Application:
   def sensor_event(self, x, y, z):
     if self.mode == Mode.SGESTURE or self.mode == Mode.GESTURE:
       text = '{"gesture":{'
-      if self.suspend_buffer == '':
-        text += '"start":"true"'
+      if self.mode == Mode.SGESTURE and self.suspend_buffer == '':
+        text += '"start":"true,"'
     else:
       text = '{"mouse":{'
     
@@ -163,7 +163,7 @@ class Application:
           self.mode = Mode.SCROLLING
         else:
           if self.mode == Mode.GESTURE:
-            self.buffer += '{"gesture":{"end":"true"}}'
+            self.buffer += '{"gesture":{"end":"true"}}\n'
           self.mode = Mode.MOUSE
       self.locker.signal()
       return
