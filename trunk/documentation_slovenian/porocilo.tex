@@ -1,0 +1,88 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[slovene]{babel}
+\usepackage[cp1250]{inputenc}
+\usepackage[usenames]{color}
+\usepackage{pdfpages}
+\usepackage{fullpage}
+\usepackage{listings}
+\begin{document}
+
+\lstset{ %
+language=C,                % choose the language of the code
+basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+numbers=left,                   % where to put the line-numbers
+numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+stepnumber=1,                   % the step between two line-numbers. If it's 1 each line will be numbered
+numbersep=7pt,                  % how far the line-numbers are from the code
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+showtabs=false,                 % show tabs within strings adding particular underscores
+frame=single,	                % adds a frame around the code
+tabsize=2,	                % sets default tabsize to 2 spaces
+captionpos=b,                   % sets the caption-position to bottom
+breaklines=true,                % sets automatic line breaking
+breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+escapeinside={\%*}{*)}          % if you want to add a comment within your code
+}
+
+\begin{titlepage}
+\begin{center}
+{\Large Univerza v Ljubljani}\\
+{\Large Fakulteta za raèunalništvo in informatiko}\\
+\vspace{6 cm}
+\textbf{{\LARGE Operacijski sistemi 2}}\\
+\vspace{2 cm}
+\textbf{{\LARGE Konèno poroèilo seminarske naloge MAIRM}}\\
+\end{center}
+\vspace{8.5 cm}
+
+\begin{minipage}{\textwidth}
+\begin{flushleft} \large
+\textbf{Avtorja:}\\
+Matej Jakop, 63070025\newline
+Gregor Kališnik, VNESI VPISNO
+\end{flushleft}
+\end{minipage}\\
+\vspace{1.0 cm}
+\begin{center}
+\textbf{Ljubljana, 25. maj 2010}
+\end{center}
+\end{titlepage}
+\setcounter{page}{1}
+\tableofcontents
+\newpage
+\section{Opis izbrane teme in problemskega podroèja}
+\input{sections/opis_teme_problemskega_podrocja.tex}
+\section{Izbrani cilji, zahteve ter omejitve}
+\input{sections/izbrani_cilji_zahteve_omejitve.tex}
+\section{Arhitektura rešitve}
+\input{sections/arhitektura_resitve.tex}
+\section{Izvedba rešitve in problemi pri tem}
+\input{sections/izvedba_resitve_problemi.tex}
+\section{Morebitno nadaljnje delo}
+\input{sections/nadaljnje_delo.tex}
+\section{Navodila za uporabo}
+\input{sections/navodila_za_uporabo.tex}
+\newpage
+\addcontentsline{toc}{section}{Literatura} 
+\begin{thebibliography}{1}
+\bibitem{tasklets}
+Tasklets.[Online].[Citirano: 17. januar 2010; 16:00]. Dostopno na spletnem naslovu: http://docs.blackfin.uclinux.org/doku.php?id=linux-kernel:tasklets.
+\bibitem{tasklets2}
+On using tasklets.[Online].[Citirano: 17. januar 2010; 16:22]. Dostopno na spletnem naslovu: http://www.cs.usfca.edu/~cruse/cs635/lesson17.ppt
+\bibitem{dpc}
+Deferred Procedure Call.[Online].[Citirano: 17. januar 2010; 17:00]. Dostopno na spletnem naslovu: http://en.wikipedia.org/wiki/Deferred\_Procedure\_Call
+\bibitem{dpc_msdn}
+Timer Objects and DPCs.[Online].[Citirano: 28. januar 2010; 16:00]. Dostopno na spletnem naslovu: http://msdn.microsoft.com/en-us/library/aa490171.aspx
+\bibitem{freebsd_tasklet}
+Scheduling a recurring task in a device drive.[Online].[Citirano: 28. januar 2010; 17:00]. Dostopno na spletnem naslovu:http://groups.google.si/group/mpc.lists.freebsd.hackers/browse\_thread/thread/fffc2a9181202627/6a6edd1ae2654fc3?hl=sl\&ie=UTF-8\&q=freebsd+tasklets\#6a6edd1ae2654fc3
+\bibitem{lib_attack}Return-to-libc attack.[Online].[Citirano: 31. januar 2010; 13:00]. Dostopno na spletnem naslovu: http://en.wikipedia.org/wiki/Return-to-libc\_attack
+\bibitem{buffer}
+Writing buffer overflow exploits - a tutorial for beginners.[Online].[Citirano: 27. januar 2010; 18:00]. Dostopno na spletnem naslovu: http://mixter.void.ru/exploit.html
+\bibitem{prosojnice}
+Prosojnice s predavanj in zapiski
+\bibitem{knjigaos}
+Avi Silberschatz,A;Galvin,P in Gagne,G.(2005).Operating System Concepts.
+\end{thebibliography}
+\end{document}

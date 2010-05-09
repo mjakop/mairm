@@ -1,0 +1,91 @@
+\subsection{Zahteve za delovanje sistema}
+Zahteve za delovanja sistema so skromne. Potrebno je imeti le:
+\begin{itemize}
+\item Operacijski sistem Windows/Linux/Mac
+\item raèunalnik z bluetooth vmesnikom
+\item mobilni telefon znamke Nokia s Symbian S60 3rd Edition ali Nokia s Symbian S60 5rd Edition, namešèeno python podporo (pyS60) in prisotnost merilnika pospeška v samem telefonu
+\end{itemize}
+Zadnja toèka seznama se bo lahko s èasom malce posplošila. V prihodnosti projekta bo verjetno dovolj, da bo uporaben poljuben telefon z merilnikom pospeška.
+
+\subsection{Potek namestitve}
+\subsubsection{Mobilni telefon}
+Možnih je veè opcij:
+\begin{enumerate}
+\item V primeru že namešèenega pyS60 na mobilni telefon prenesemo (preko bluetooth ali kako drugaèe) samo mairm.py datoteko, ki se nahaja v paketu za inštalacijo. Na mobilnem telefonu jo shranimo na pomnilniško kartico v imenik data/python. Tako bo datoteka vidna v python vmesniku do interpreterja. Namestitev konèana.
+\item V primeru, da je v namestitvenemu paketu prisotna datoteka mairm.sis le-to prenesemo na mobilni telefon in poženemo namestitev ter sledimo korakom na zaslonu.
+\end{enumerate}
+
+\subsubsection{Raèunalnik}
+Na raèunalniku je namestitev sila preprosta. Potrebno je samo razpakirati namestitveni paket ali pognati namestitveno datoteko.
+
+\subsection{Povezava mobilnega telefona in raèunalnika ter prièetek delovanja}
+Za vzpostavitev povezave je potrebno slediti naslednjim korakom:
+\begin{enumerate}
+\item Vklopimo bluetooth vmesnik v kolikor je izkljuèen
+\item Sparimo telefon in raèunalnik v primeru, daj eto potrebno storiti
+\item Poženemo program MAIRM (èe smo namestili z namestitvenim programom) oziroma v direktoriju namestitvenega pakete v konzoli poženemo ukaz 
+\begin{center}
+java -jar mairm.jar
+\end{center}
+\item Na mobilnem telefonu poženemo aplikacijo MAIRM (èe smo namestili z mairm.sis ) oziroma Python 2.x.x. Èe smo pognali Python 2.x.x moramo v njem še odpreti skripto. To storimo tako, da izberemo \"options\" in nato \"run script\". Poišèemo datoteko mairm.py in jo izberemo. 
+\item Prikaže se nam seznam bluetooth naprav in izberemo naš raèunalnik na katerem teèe mairm. Po potrditvi tega nas bo telefon morebiti še povprašal po storitvi na katero se želimo povezati. Enostavno izberemo MAIRM.
+\item Èe so bili vsi koraki uspešno izvedeni, bi se sedaj morala miška zaèeti premikati po zaslonu v skladu s premikanjem telefona.
+\end{enumerate}
+
+
+\subsection{Uporabni napotki pri uporabi}
+\subsubsection{Miško premikamo ekranu v skladu s temi naèeli:}
+\begin{itemize}
+\item Nagib telefona naprej, premakne miško navzgor
+\item Nagib telefona nazaj, premakne miško navzdol
+\item Nagib telefona levo, premakne miško levo
+\item Nagib telefona desno, premakne miško desno
+\end{itemize}
+
+TUKAJ PRIDE ŠE OSTALO, KAR ŠE NI NAREJENO ÈISTO USKLAJENO ZA TIPKE NA TELEFONU
+
+
+\subsubsection{Novo kretnjo posnememo na sledeèi naèin:}
+\begin{enumerate}
+\item Odpremo glavno okno aplikacije (èe se aplikacija sluèajno skriva v System tray podroèju)
+\item Aplikacijo razširimo s klikom na sivi gumb, da dobimo opcijo vnosa imena kretnje
+\item Vnesemo ime kretnje ter kliknemo na Learn
+\item S pomoèjo telefona (seveda mora biti najprej vzpostavljena povezava med mobitelom in raèunalnikom) izvedemo kretnjo kot obièajno
+\item Èe še nismo tega storili vsaj 5x se vrnemo 3. korak in ponovimo z istim imenom
+\item Èe še nimamo shranjeni vsaj 2 kretnji, ponovimo postopek vendar tokrat z drugo kretnjo.
+\item Ko vse opravimo kot je bilo opisano v prejšnjih korakih, bi moral sistem zaèeti prepoznavati uporabnikove definirane kretnje
+\end{enumerate}
+
+\subsubsection{Nastavitev kaj naj sistem naredi ob izvedbi doloèene kretnje}
+\begin{enumerate}
+\item Odpremo datoteko actions.xml, ki se nahaja v istem direktoriju, kot je bil namešèen sam program.
+\item V datoteki bi že moral biti prisoten seznam vseh kretenj, ki jih sistem pozna. 
+\item Odloèiti se je potrebno kaj bi radi, da sistem naredi:
+	\begin{itemize}
+		\item izvede nek program\newline
+			V tem primeru med znaèke $<$exec$>$ in $<$/exec$>$ vnesemo pot in ime programa.
+		\item pritisne doloèeno kombinacijo tipk\newline
+			V tem primeru med znaèke $<$keys$>$ in $<$/keys$>$ dodamo nove tipke in sicer podobno kot v em primeru:
+			\begin{center} $<$key delayRelease="false"$>$F1$<$/key$>$ \end{center}
+			To pomeni, da se bo v primeru izvedbe kretnje simuliral pritisk tipke F1. Atribut delayRelease pa pomeni ali naj sistem drži tipko vse dokler se ne izvedejo še preostali pritiski tipk. Še en primer tega za pošiljanje windows+r (požene okno za zagon programa):
+			\begin{center} $<$key delayRelease="true"$>$WINDOWS$<$/key$>$\end{center}
+			\begin{center} $<$key delayRelease="false"$>$r$<$/key$>$ \end{center}
+			Seznam vseh tipk, ki so na voljo za takšen vnos je zapisan v datoteki keyboard\_keys\_available.txt po prvem zagonu MAIRM programa.
+	\end{itemize}
+\item Datoteko shranimo
+\item Kliknemo z desno miškino tipko na ikonco mairm programa in izberemo opcijo \"Reload gesture action bindings\".
+\end{enumerate}
+
+\subsubsection{Izboljšava zaznavanja kretenj}
+Èe se opazi, da sistem dve kretnji pogosto zamenjuje potem lahko to rešite dokaj enostavno. Potrebno je posneti samo veè ponovitev problematiènih kretenj (pri številu 15x ponovitev sistem že zelo dobro loèi tudi skoraj èisto enake kretnje, npr. krog v levo in krog v desno). 
+
+
+
+
+
+
+
+
+
+
+
