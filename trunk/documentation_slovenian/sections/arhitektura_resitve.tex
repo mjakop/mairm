@@ -1,0 +1,37 @@
+\begin{center}\includegraphics[width=140mm]{images/arch.png}\end{center}
+Rešitev je zasnovana s pomoèjo principa strežnik-odjemalec. Vsak ima svoje funkcionalnosti, skupaj pa predstavljata delujoèo celoto. Na strežnikovi strani teèe MAIRM strežniška aplikacija. Njene naloge so:
+\begin{itemize}
+\item ustvari bluetooth service (z imenom MAIRM) preko katerega se MAIRM odjemalec poveže do same aplikacije,
+\item poskrbi za pravilno prepoznavo odjemalèevih akcij:
+	\begin{itemize}
+		\item premikanje miške po zaslonu,
+		\item pomikanje po straneh (scrolling),
+		\item uporaba mobilne tipkovnice,
+		\item prepoznavanje 3D kretenj
+	\end{itemize}
+\item skrbi za pravilen odziv glede na odjemalèevo akcijo:
+	\begin{itemize}
+		\item èe zazna zahtevo po premiku miške, premakne miško
+		\item èe zazna zahtevo po pomikanje preko strani, simulira potreben dogodek
+		\item èe zazna zahtevo po pritisku tipke, simulira pritisk
+		\item èe zazna 3D kretnjo naredi akcijo (akcija je doloèena v XML datoteki), ki je doloèena za njo:
+			\begin{itemize}
+				\item požene nek program
+				\item pritisne neko kombinacijo tipk
+			\end{itemize}
+	\end{itemize}
+\end{itemize}
+Na mobitelovi strani oziroma odjemalèevi strani teèe MAIRM odjemalèeva aplikacija. Njene naloge so:
+\begin{itemize}
+\item zajemanje podatkov iz merilnika pospeška vgrajenega v sam mobitel,
+\item zajemanje pritiskov tipk,
+\item posredovanje zajetih podatkov po MAIRM protokolu vse do MAIRM strežniške aplikacije,
+\item skrbi za preklapljanje med naslednjimi naèini delovanja:
+	\begin{itemize}
+		\item Mouse mode,
+		\item Scrolling mode,
+		\item Gesture mode
+	\end{itemize}
+\end{itemize}
+\subsection{MAIRM protokol}
+\input{sections/opis_protokola.tex}

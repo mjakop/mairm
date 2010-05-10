@@ -1,0 +1,54 @@
+Sam protol je v JSON formatu in teèe preko Bluetooth Serial Port ter je zelo enostaven. V trenutni verziji je podprta samo enosmerna komunikacija.
+\subsubsection{Uporabljeni podatkovni tipi}
+boolean  = true ali false\newline
+double = decimalno število\newline
+buttonState = up ali down\newline
+buttonStateMiddle = up ali down ali scrolling\newline
+scrolling pomeni, da telefon preide iz naèina nadziranja miške na naèin nadziranja scrollerja preko nagibanja\newline
+keys = ASCII ali ENTER ali BACKSPACE ali ...\newline
+Dodatne tipke so stvar dogovora in potrebe
+
+\subsubsection{Format za GESTURE mode}
+Oblika:\newline
+\{"gesture":\{"x":"double","y":"double","z":" double ","start":"boolean","end":"boolean"\}\}\newline
+Razlaga:\newline
+x = vrednost akselometra po x-osi. \newline
+Privzeta vrednost: 0.0\newline
+
+y = vrednost akselometra po y-osi.\newline
+Privzeta vrednost: 0.0\newline
+
+z = vrednost akselometra po z-osi.\newline
+Privzeta vrednost: 0.0\newline
+
+start = doloèa ali prejeti podatki pomenijo zaèetek gesture ali ne. Vrednost true ima lahko samo pri prvem sporoèilu nekega gesture.\newline
+Privzeta vrednost: false\newline\newline
+end = doloèa ali prejeti podatki pomenijo konec gesture ali ne. Vrednost true ima lahko le pri zadnjem sporoèilu za nek gesture. \newline
+Privzeta vrednost: false
+
+
+\subsubsection{Format za MOUSE mode}
+Oblika:\newline
+\{"mouse":\{"x":"double","y":"double","z":"double","leftbutton":"buttonState","middlebutton":"buttonStateMiddle","rightbutton":"buttonState"\}\}\newline
+Razlaga:\newline
+x = vrednost akselometra po x-osi. \newline
+Privzeta vrednost: 0.0\newline
+
+y = vrednost akselometra po y-osi.\newline
+Privzeta vrednost: 0.0\newline
+
+z = vrednost akselometra po z-osi.\newline
+Privzeta vrednost: 0.0\newline
+leftbutton = levi miškin gumb\newline
+Privzeta vrednost: up\newline
+middlebutton = srednji miškin gumb\newline
+Privzeta vrednost: up\newline
+rightbutton = desni miškin gumb\newline
+Privzeta vrednost: up\newline
+
+\subsubsection{Format za KEYBOARD mode}
+Oblika:\newline
+\{"keyboard": \{"key":"keys"\}\}\newline
+Razlaga:\newline
+key = tipka, ki naj bi bila pritisnjena na raèunalniški tipkovnici
+
