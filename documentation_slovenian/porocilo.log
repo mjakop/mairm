@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.9)  9 MAY 2010 12:16
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.9)  10 MAY 2010 20:13
 entering extended mode
 **porocilo
 (D:\Programiranje\java\MAIRM\documentation_slovenian\porocilo.tex
@@ -232,40 +232,102 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (D:\Programiranje\java\MAIRM\documentation_slovenian\sections/izbrani_cilji_zah
 teve_omejitve.tex)
 (D:\Programiranje\java\MAIRM\documentation_slovenian\sections/arhitektura_resit
-ve.tex)
+ve.tex <images/arch.png, id=11, 903.375pt x 301.125pt>
+File: images/arch.png Graphic file (type png)
+ <use images/arch.png>
+Overfull \hbox (7.65752pt too wide) in paragraph at lines 2--3
+\OT1/cmr/m/n/12 nosti, sku-paj pa pred-stavl-jata delujoco celoto. Na strezni
+kovi strani tece MAIRM strezniska
+ []
+
+[2 <D:/Programiranje/java/MAIRM/documentation_slovenian/images/arch.png>]
+(D:\Programiranje\java\MAIRM\documentation_slovenian\sections/opis_protokola.te
+x
+Overfull \hbox (4.10236pt too wide) in paragraph at lines 3--10
+\OT1/cmr/m/n/12 scrolling pomeni, da tele-fon preide iz nacina nadzi-ranja mi
+ske na nacin nadzi-ranja scrollerja
+ []
+
+
+Overfull \hbox (1.99158pt too wide) in paragraph at lines 12--17
+\OMS/cmsy/m/n/12 f\OT1/cmr/m/n/12 "gesture":\OMS/cmsy/m/n/12 f\OT1/cmr/m/n/12 "
+x":"double","y":"double",z":"double ",start":"boolean","end":"boolean"\OMS/cm
+sy/m/n/12 gg 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 12--17
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 18--20
+
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 21--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--28
+
+ []
+
+
+Overfull \hbox (307.74535pt too wide) in paragraph at lines 31--36
+\OMS/cmsy/m/n/12 f\OT1/cmr/m/n/12 "mouse":\OMS/cmsy/m/n/12 f\OT1/cmr/m/n/12 "x"
+:"double","y":"double",z":"double","leftbutton":"buttonState","middlebutton":"
+buttonStateMiddle","rightbutton":"buttonState"\OMS/cmsy/m/n/12 gg 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 31--36
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 37--39
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--48
+
+ []
+
+))
 (D:\Programiranje\java\MAIRM\documentation_slovenian\sections/izvedba_resitve_p
 roblemi.tex)
 (D:\Programiranje\java\MAIRM\documentation_slovenian\sections/nadaljnje_delo.te
-x)
+x [4])
 (D:\Programiranje\java\MAIRM\documentation_slovenian\sections/navodila_za_upora
-bo.tex [2]
+bo.tex [5]
 Overfull \hbox (3.49275pt too wide) in paragraph at lines 26--27
 []\OT1/cmr/m/n/12 Pozenemo pro-gram MAIRM (ce smo na-mestili z na-mestitvenim
  pro-gramom) oziroma
  []
 
-[3] [4]) [5] [6]
-(D:\Programiranje\java\MAIRM\documentation_slovenian\porocilo.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+[6] [7]) [8] [9]
+(D:\Programiranje\java\MAIRM\documentation_slovenian\porocilo.aux) ) 
 Here is how much of TeX's memory you used:
- 3644 strings out of 495285
- 53536 string characters out of 3180341
- 130321 words of memory out of 3000000
- 6791 multiletter control sequences out of 15000+200000
+ 3661 strings out of 495285
+ 53966 string characters out of 3180341
+ 130297 words of memory out of 3000000
+ 6802 multiletter control sequences out of 15000+200000
  8201 words of font info for 29 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 33i,6n,49p,380b,243s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Pr
-ogram Files/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Fi
-les/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTe
-X 2.8/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.8/fon
-ts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on porocilo.pdf (7 pages, 76850 bytes).
+ 33i,7n,49p,380b,273s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program
+ Files/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/M
+iKTeX 2.8/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.
+8/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.8/fonts/t
+ype1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.8/fonts/type1/publ
+ic/amsfonts/cm/cmsy10.pfb>
+Output written on porocilo.pdf (10 pages, 178377 bytes).
 PDF statistics:
- 46 PDF objects out of 1000 (max. 8388607)
+ 58 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

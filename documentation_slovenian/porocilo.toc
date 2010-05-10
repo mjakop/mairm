@@ -2,17 +2,22 @@
 \contentsline {section}{\numberline {1}Opis izbrane teme in problemskega podro\v cja}{2}
 \contentsline {section}{\numberline {2}Izbrani cilji, zahteve ter omejitve}{2}
 \contentsline {section}{\numberline {3}Arhitektura re\v sitve}{2}
-\contentsline {section}{\numberline {4}Izvedba re\v sitve in problemi pri tem}{2}
-\contentsline {section}{\numberline {5}Morebitno nadaljnje delo}{2}
-\contentsline {section}{\numberline {6}Navodila za uporabo}{3}
-\contentsline {subsection}{\numberline {6.1}Zahteve za delovanje sistema}{3}
-\contentsline {subsection}{\numberline {6.2}Potek namestitve}{3}
-\contentsline {subsubsection}{\numberline {6.2.1}Mobilni telefon}{3}
-\contentsline {subsubsection}{\numberline {6.2.2}Ra\v cunalnik}{3}
-\contentsline {subsection}{\numberline {6.3}Povezava mobilnega telefona in ra\v cunalnika ter pri\v cetek delovanja}{3}
-\contentsline {subsection}{\numberline {6.4}Uporabni napotki pri uporabi}{4}
-\contentsline {subsubsection}{\numberline {6.4.1}Mi\v sko premikamo ekranu v skladu s temi na\v celi:}{4}
-\contentsline {subsubsection}{\numberline {6.4.2}Novo kretnjo posnememo na slede\v ci na\v cin:}{4}
-\contentsline {subsubsection}{\numberline {6.4.3}Nastavitev kaj naj sistem naredi ob izvedbi dolo\v cene kretnje}{5}
-\contentsline {subsubsection}{\numberline {6.4.4}Izbolj\v sava zaznavanja kretenj}{5}
-\contentsline {section}{Literatura}{6}
+\contentsline {subsection}{\numberline {3.1}MAIRM protokol}{3}
+\contentsline {subsubsection}{\numberline {3.1.1}Uporabljeni podatkovni tipi}{3}
+\contentsline {subsubsection}{\numberline {3.1.2}Formar za GESTURE mode}{3}
+\contentsline {subsubsection}{\numberline {3.1.3}Formar za MOUSE mode}{4}
+\contentsline {subsubsection}{\numberline {3.1.4}Formar za KEYBOARD mode}{4}
+\contentsline {section}{\numberline {4}Izvedba re\v sitve in problemi pri tem}{5}
+\contentsline {section}{\numberline {5}Morebitno nadaljnje delo}{5}
+\contentsline {section}{\numberline {6}Navodila za uporabo}{5}
+\contentsline {subsection}{\numberline {6.1}Zahteve za delovanje sistema}{5}
+\contentsline {subsection}{\numberline {6.2}Potek namestitve}{5}
+\contentsline {subsubsection}{\numberline {6.2.1}Mobilni telefon}{5}
+\contentsline {subsubsection}{\numberline {6.2.2}Ra\v cunalnik}{6}
+\contentsline {subsection}{\numberline {6.3}Povezava mobilnega telefona in ra\v cunalnika ter pri\v cetek delovanja}{6}
+\contentsline {subsection}{\numberline {6.4}Uporabni napotki pri uporabi}{6}
+\contentsline {subsubsection}{\numberline {6.4.1}Mi\v sko premikamo ekranu v skladu s temi na\v celi:}{6}
+\contentsline {subsubsection}{\numberline {6.4.2}Novo kretnjo posnememo na slede\v ci na\v cin:}{7}
+\contentsline {subsubsection}{\numberline {6.4.3}Nastavitev kaj naj sistem naredi ob izvedbi dolo\v cene kretnje}{7}
+\contentsline {subsubsection}{\numberline {6.4.4}Izbolj\v sava zaznavanja kretenj}{8}
+\contentsline {section}{Literatura}{9}
