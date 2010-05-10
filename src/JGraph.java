@@ -19,6 +19,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 
 public class JGraph  extends JComponent {
@@ -34,11 +35,19 @@ public class JGraph  extends JComponent {
 	private Color legendColor=Color.darkGray;
 	private Color fontColor=Color.WHITE;
 	private String title;
+	private boolean displayed=true;
 	
 	public JGraph(int maxPoints) {
 		points=new double[maxPoints];
-		setDoubleBuffered(true);
+		setDoubleBuffered(true);		
+	}
 		
+	public boolean isDisplayed() {
+		return displayed;
+	}
+	
+	public void setDisplayed(boolean displayed) {
+		this.displayed = displayed;
 	}
 	
 	public void setTextTitle(String title){
@@ -77,7 +86,9 @@ public class JGraph  extends JComponent {
 		} else if (value < minValue){
 			minValue=value;
 		}
-		repaint();
+		if (getParent()!=null && getParent().isVisible()){
+			repaint();
+		}
 	}
 	
 	private double normalizeValue(double value){

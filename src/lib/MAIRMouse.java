@@ -35,6 +35,7 @@ public class MAIRMouse extends MAIRObject {
 		if (robot==null){
 			try{
 				robot=new Robot();
+				robot.setAutoDelay(10);
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -162,8 +163,8 @@ public class MAIRMouse extends MAIRObject {
 			if(dy > 0 && dy < 200){
 				factorChangeY=dy/200.0;
 			}
-			dx*=factorChangeX*dirX;
-			dy*=factorChangeY*dirY;
+			dx*=factorChangeX*dirX*0.8;
+			dy*=factorChangeY*dirY*0.8;
 			//average value with last values for smoother movement
 			avgX.put(dx);
 			avgY.put(dy);
