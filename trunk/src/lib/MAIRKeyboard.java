@@ -263,6 +263,7 @@ public class MAIRKeyboard {
 	
 	
 	public void process(MAIRInputMessageKeyboard msg){
-
+		getRobot().keyPress(msg.getKeyCode());
+		getRobot().keyRelease(msg.getKeyCode());
 	}
 }

@@ -471,5 +471,9 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		GestureDetectedActions.createNewActionForGestureIfNotExist(gestureName);
 		getNotifyWindow().displayMessage("I learnt "+gestureName);	
 		getGestureNameInput().setEditable(true);
+		try{
+			GestureDetectedActions.saveChangesToFile(gestureActionsFileName);
+		}catch (Exception e) {
+		}
 	}	
 }

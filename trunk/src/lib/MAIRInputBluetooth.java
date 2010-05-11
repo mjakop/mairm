@@ -219,6 +219,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 							}
 							return m;
 						} else if(jobj.containsKey("keyboard")){
+							System.out.println(line);
 							JSONObject kObj=(JSONObject)jobj.get("keyboard");
 							String key=(String)kObj.get("key");
 							if (key!=null){
@@ -226,7 +227,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 								if (keyCode > 0){
 									MAIRInputMessageKeyboard keyboard=new MAIRInputMessageKeyboard(keyCode);
 									keyboard.setIgnoreFilters(true);
-									return  keyboard;
+									return keyboard;
 								}
 							}
 						}

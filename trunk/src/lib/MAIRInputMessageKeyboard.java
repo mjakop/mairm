@@ -18,6 +18,10 @@ package lib;
 public class MAIRInputMessageKeyboard extends MAIRInputMessage {
 	
 	private int keyCode;
+	//key modifiers
+	private boolean altDown=false;
+	private boolean shiftDown=false;
+	private boolean controlDown=false;
 	
 	public MAIRInputMessageKeyboard(int keyCode) {
 		this.keyCode=keyCode;
@@ -26,8 +30,35 @@ public class MAIRInputMessageKeyboard extends MAIRInputMessage {
 	public int getKeyCode() {
 		return keyCode;
 	}
+	
 	public void setKeyCode(int keyCode) {
 		this.keyCode = keyCode;
 	}
+	
+	public void setAltDown(boolean status){
+		altDown=status;
+	}
+	
+	public boolean isAltDown() {
+		return altDown;
+	}
+	
+	public boolean isShiftDown() {
+		return shiftDown;
+	}
+	
+	public void setShiftDown(boolean shiftDown) {
+		this.shiftDown = shiftDown;
+	}
+	
+	public boolean isControlDown() {
+		return controlDown;
+	}
+	
+	public void setControlDown(boolean controlDown) {
+		this.controlDown = controlDown;
+	}
+	
+	
 	
 }
