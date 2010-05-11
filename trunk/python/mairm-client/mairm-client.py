@@ -15,6 +15,7 @@ class Mode:
   SCROLLING = u'Scrolling'
   GESTURE = u'Gesture'
   SGESTURE = u'Suspended gesture'
+  KEYBOARD = u'Keyboard'
 
 class Application:
   def __init__(self):
@@ -57,6 +58,9 @@ class Application:
       return False
 
   def sensor_event(self, x, y, z):
+    if self.mode == Mode.KEYBOARD:
+      return
+    
     if self.mode == Mode.SGESTURE or self.mode == Mode.GESTURE:
       text = '{"gesture":{'
       if self.mode == Mode.SGESTURE and self.suspend_buffer == '':
@@ -94,13 +98,17 @@ class Application:
     
     size = self.canvas.size
     top = 40
-    bottom = size[1]
+    bottom = size[1] - 60
     space = 20
     width = (size[0] - 2 * space) / 3
     
-    self.buttons = ((0, top), (width, bottom),
-                    (width + space, top), (width * 2 + space, bottom),
-                    (width * 2 + space * 2, top), (width * 3 + space * 2, bottom))
+    self.buttons = ((0, top), (width, bottom), # Left button
+                    (width + space, top), (width * 2 + space, bottom), # Middle button
+                    (width * 2 + space * 2, top), (width * 3 + space * 2, bottom), # Right button
+                    (0, space + bottom), (width, size[1])) # Edit button
+  
+  def inside(self, pos, button):
+    return (pos[0] >= self.buttons[button * 2][0] and pos[1] >= self.buttons[button * 2][1]) and (pos[0] <= self.buttons[button * 2 + 1][0] and pos[1] <= self.buttons[button * 2 + 1][1])
   
   def simulate_softkey(self, event):
     if self.buttons is None:
@@ -113,12 +121,14 @@ class Application:
     else:
       return (None, None)
     
-    if (event['pos'] >= self.buttons[0]) and (event['pos'] <= self.buttons[1]):
+    if self.inside(event['pos'], 0):
       return (key_codes.EScancodeLeftSoftkey, type)
-    elif (event['pos'] >= self.buttons[2]) and (event['pos'] <= self.buttons[3]):
+    elif self.inside(event['pos'], 1):
       return (key_codes.EScancodeSelect, type)
-    elif (event['pos'] >= self.buttons[4]) and (event['pos'] <= self.buttons[5]):
+    elif self.inside(event['pos'], 2):
       return (key_codes.EScancodeRightSoftkey, type)
+    elif self.inside(event['pos'], 3):
+      return (key_codes.EScancodeEdit, type)
     else:
       return (None, None)
   
@@ -148,12 +158,14 @@ class Application:
         text += '"down"'
       elif event['type'] == appuifw.EEventKeyUp:
         text += '"up"'
+        
     elif event['scancode'] == key_codes.EScancodeRightSoftkey:
       text = '{"mouse":{"rightbutton":'
       if event['type'] == appuifw.EEventKeyDown:
         text += '"down"'
       elif event["type"] == appuifw.EEventKeyUp:
         text += '"up"'
+        
     elif event['scancode'] == key_codes.EScancodeSelect:
       if self.mode != Mode.SCROLLING and event['type'] == appuifw.EEventKeyDown:
         self.mode = Mode.SGESTURE
@@ -168,6 +180,19 @@ class Application:
           self.mode = Mode.MOUSE
       self.locker.signal()
       return
+    elif event['scancode'] == key_codes.EScancodeEdit:
+      prev = self.mode
+      self.mode = Mode.KEYBOARD
+      self.locker.signal()
+      appuifw.app.orientation = 'automatic'
+      try:
+        text = '"}}\n'.join(['{"keyboard":{"key":"' + c for c in appuifw.query(u'Text', 'text')])
+      except:
+        text = ''
+      self.mode = prev
+      appuifw.app.orientation = 'portrait'
+      self.locker.signal()
+      
     elif event['scancode'] == key_codes.EScancodeNo:
       appuifw.app.set_exit()
       return
