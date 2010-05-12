@@ -145,6 +145,32 @@ class Application:
     if self.buttons is not None:
       self.canvas.rectangle(self.buttons, fill=(200, 200, 200))
     
+      # Drawing texts
+      # Left
+      width = self.buttons[1][0] / 2
+      self.canvas.text((self.buttons[0][0] + width, self.buttons[0][1] + 30), u'L')
+      self.canvas.text((self.buttons[0][0] + width, self.buttons[0][1] + 50), u'e')
+      self.canvas.text((self.buttons[0][0] + width, self.buttons[0][1] + 70), u'f')
+      self.canvas.text((self.buttons[0][0] + width, self.buttons[0][1] + 90), u't')
+      # Mode
+      self.canvas.text((self.buttons[2][0] + width, self.buttons[2][1] + 30), u'M')
+      self.canvas.text((self.buttons[2][0] + width, self.buttons[2][1] + 50), u'o')
+      self.canvas.text((self.buttons[2][0] + width, self.buttons[2][1] + 70), u'd')
+      self.canvas.text((self.buttons[2][0] + width, self.buttons[2][1] + 90), u'e')
+      # Right
+      self.canvas.text((self.buttons[4][0] + width, self.buttons[4][1] + 30), u'R')
+      self.canvas.text((self.buttons[4][0] + width, self.buttons[4][1] + 50), u'i')
+      self.canvas.text((self.buttons[4][0] + width, self.buttons[4][1] + 70), u'g')
+      self.canvas.text((self.buttons[4][0] + width, self.buttons[4][1] + 90), u'h')
+      self.canvas.text((self.buttons[4][0] + width, self.buttons[4][1] + 110), u't')
+      
+      # Text
+      self.canvas.text((self.buttons[6][0] + 10, self.buttons[6][1] + 30), u'Keys')
+      # Backspace (C)
+      self.canvas.text((self.buttons[8][0] + width, self.buttons[8][1] + 30), u'C')
+      # Return
+      self.canvas.text((self.buttons[10][0] + 10, self.buttons[10][1] + 30), u'Return')
+    
     self.canvas.text((0, 12), u'Mode: %s' % self.mode)
 
   def resume(self):
