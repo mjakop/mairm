@@ -3,6 +3,7 @@ import e32
 import btsocket, appuifw, key_codes
 
 #from sensors import AbstractSensor, init_sensor
+#from parsers import parse_string
 
 def dummy():
   pass
@@ -186,7 +187,7 @@ class Application:
       self.locker.signal()
       appuifw.app.orientation = 'automatic'
       try:
-        text = '"}}\n'.join(['{"keyboard":{"key":"' + c for c in appuifw.query(u'Text', 'text')])
+        text = parse_string(appuifw.query(u'Text', 'text'))
       except:
         text = ''
       self.mode = prev
