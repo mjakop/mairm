@@ -106,7 +106,9 @@ class Application:
     self.buttons = ((0, top), (width, bottom), # Left button
                     (width + space, top), (width * 2 + space, bottom), # Middle button
                     (width * 2 + space * 2, top), (width * 3 + space * 2, bottom), # Right button
-                    (0, space + bottom), (width, size[1])) # Edit button
+                    (0, space + bottom), (width, size[1]), # Edit button
+                    (width + space, space + bottom), (width * 2 + space, size[1]), # Remove (C)
+                    (width * 2 + space * 2, space + bottom), (width * 3 + space * 2, size[1])) # New line (0)
   
   def inside(self, pos, button):
     return (pos[0] >= self.buttons[button * 2][0] and pos[1] >= self.buttons[button * 2][1]) and (pos[0] <= self.buttons[button * 2 + 1][0] and pos[1] <= self.buttons[button * 2 + 1][1])
@@ -130,6 +132,10 @@ class Application:
       return (key_codes.EScancodeRightSoftkey, type)
     elif self.inside(event['pos'], 3):
       return (key_codes.EScancodeEdit, type)
+    elif self.inside(event['pos'], 4):
+      return (key_codes.EScancodeBackspace, type)
+    elif self.inside(event['pos'], 5):
+      return (key_codes.EScancode0, type)
     else:
       return (None, None)
   
@@ -166,7 +172,15 @@ class Application:
         text += '"down"'
       elif event["type"] == appuifw.EEventKeyUp:
         text += '"up"'
-        
+    
+    elif event['scancode'] == key_codes.EScancodeBackspace:
+      if event['type'] == appuifw.EEventKeyDown:
+        text = '{"keyboard":{"keys":"BACKSPACE"}}\n'
+    
+    elif event['scancode'] == key_codes.EScancode0:
+      if event['type'] == appuifw.EEventKeyDown:
+        text = '{"keyboard":{"keys":"ENTER"}}\n'
+    
     elif event['scancode'] == key_codes.EScancodeSelect:
       if self.mode != Mode.SCROLLING and event['type'] == appuifw.EEventKeyDown:
         self.mode = Mode.SGESTURE
