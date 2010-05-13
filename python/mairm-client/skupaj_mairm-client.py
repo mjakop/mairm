@@ -2,6 +2,9 @@
 import e32
 import btsocket, appuifw, key_codes
 
+#from sensors import AbstractSensor, init_sensor
+#from parsers import parse_string
+
 # -*- coding: utf-8 -*-
 import sensor
 
@@ -70,6 +73,24 @@ def init_sensor():
     except:
       raise Exception('No supported accelometer sensors API.')
 
+
+def parse_string(text):
+  output = u''
+  for char in text:
+    modifiers = u''
+    if char == u'@':
+      char = u'AT'
+    elif char == u'"':
+      char = u'DOUBLE QUOTE'
+    elif char == u"'":
+      char = u'QUOTE'
+    elif char.isupper():
+      char = char.lower()
+      modifiers += u'SHIFT'
+    
+    output += u'{"keyboard":{"keys":"%s", "modifiers":"%s"}}\n' % (char, modifiers)
+  
+  return output
 
 def dummy():
   pass
@@ -172,7 +193,9 @@ class Application:
     self.buttons = ((0, top), (width, bottom), # Left button
                     (width + space, top), (width * 2 + space, bottom), # Middle button
                     (width * 2 + space * 2, top), (width * 3 + space * 2, bottom), # Right button
-                    (0, space + bottom), (width, size[1])) # Edit button
+                    (0, space + bottom), (width, size[1]), # Edit button
+                    (width + space, space + bottom), (width * 2 + space, size[1]), # Remove (C)
+                    (width * 2 + space * 2, space + bottom), (width * 3 + space * 2, size[1])) # New line (0)
   
   def inside(self, pos, button):
     return (pos[0] >= self.buttons[button * 2][0] and pos[1] >= self.buttons[button * 2][1]) and (pos[0] <= self.buttons[button * 2 + 1][0] and pos[1] <= self.buttons[button * 2 + 1][1])
@@ -196,6 +219,10 @@ class Application:
       return (key_codes.EScancodeRightSoftkey, type)
     elif self.inside(event['pos'], 3):
       return (key_codes.EScancodeEdit, type)
+    elif self.inside(event['pos'], 4):
+      return (key_codes.EScancodeBackspace, type)
+    elif self.inside(event['pos'], 5):
+      return (key_codes.EScancode0, type)
     else:
       return (None, None)
   
@@ -204,6 +231,32 @@ class Application:
     
     if self.buttons is not None:
       self.canvas.rectangle(self.buttons, fill=(200, 200, 200))
+    
+      # Drawing texts
+      # Left
+      width = self.buttons[1][0] / 2
+      self.canvas.text((self.buttons[0][0] + width, self.buttons[0][1] + 30), u'L')
+      self.canvas.text((self.buttons[0][0] + width, self.buttons[0][1] + 50), u'e')
+      self.canvas.text((self.buttons[0][0] + width, self.buttons[0][1] + 70), u'f')
+      self.canvas.text((self.buttons[0][0] + width, self.buttons[0][1] + 90), u't')
+      # Mode
+      self.canvas.text((self.buttons[2][0] + width, self.buttons[2][1] + 30), u'M')
+      self.canvas.text((self.buttons[2][0] + width, self.buttons[2][1] + 50), u'o')
+      self.canvas.text((self.buttons[2][0] + width, self.buttons[2][1] + 70), u'd')
+      self.canvas.text((self.buttons[2][0] + width, self.buttons[2][1] + 90), u'e')
+      # Right
+      self.canvas.text((self.buttons[4][0] + width, self.buttons[4][1] + 30), u'R')
+      self.canvas.text((self.buttons[4][0] + width, self.buttons[4][1] + 50), u'i')
+      self.canvas.text((self.buttons[4][0] + width, self.buttons[4][1] + 70), u'g')
+      self.canvas.text((self.buttons[4][0] + width, self.buttons[4][1] + 90), u'h')
+      self.canvas.text((self.buttons[4][0] + width, self.buttons[4][1] + 110), u't')
+      
+      # Text
+      self.canvas.text((self.buttons[6][0] + 10, self.buttons[6][1] + 30), u'Keys')
+      # Backspace (C)
+      self.canvas.text((self.buttons[8][0] + width, self.buttons[8][1] + 30), u'C')
+      # Return
+      self.canvas.text((self.buttons[10][0] + 10, self.buttons[10][1] + 30), u'Return')
     
     self.canvas.text((0, 12), u'Mode: %s' % self.mode)
 
@@ -232,7 +285,15 @@ class Application:
         text += '"down"'
       elif event["type"] == appuifw.EEventKeyUp:
         text += '"up"'
-        
+    
+    elif event['scancode'] == key_codes.EScancodeBackspace:
+      if event['type'] == appuifw.EEventKeyDown:
+        text = '{"keyboard":{"keys":"BACKSPACE"}}\n'
+    
+    elif event['scancode'] == key_codes.EScancode0:
+      if event['type'] == appuifw.EEventKeyDown:
+        text = '{"keyboard":{"keys":"ENTER"}}\n'
+    
     elif event['scancode'] == key_codes.EScancodeSelect:
       if self.mode != Mode.SCROLLING and event['type'] == appuifw.EEventKeyDown:
         self.mode = Mode.SGESTURE
@@ -253,7 +314,7 @@ class Application:
       self.locker.signal()
       appuifw.app.orientation = 'automatic'
       try:
-        text = '"}}\n'.join(['{"keyboard":{"key":"' + c for c in appuifw.query(u'Text', 'text')])
+        text = parse_string(appuifw.query(u'Text', 'text'))
       except:
         text = ''
       self.mode = prev

@@ -221,7 +221,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 						} else if(jobj.containsKey("keyboard")){
 							System.out.println(line);
 							JSONObject kObj=(JSONObject)jobj.get("keyboard");
-							String key=(String)kObj.get("key");
+							String key=(String)kObj.get("keys");
 							if (key!=null){
 								int keyCode=MAIRKeyboard.stringToKeyCode(key);
 								if (keyCode > 0){
