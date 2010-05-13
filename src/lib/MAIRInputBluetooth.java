@@ -30,6 +30,7 @@ import javax.microedition.io.StreamConnectionNotifier;
 import lib.MAIRInputMessageMouse.ButtonStatus;
 import lib.MAIRInputMessageMouse.MouseState;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -227,6 +228,17 @@ public class MAIRInputBluetooth extends MAIRInput {
 								if (keyCode > 0){
 									MAIRInputMessageKeyboard keyboard=new MAIRInputMessageKeyboard(keyCode);
 									keyboard.setIgnoreFilters(true);
+									//now parse modifiers
+									Object modiff=kObj.get("modifiers");
+									if (modiff instanceof JSONArray){
+										JSONArray array=(JSONArray)modiff;
+										for(int i=0;i<array.size();i++){
+											String s=(String)array.get(i);
+											keyboard.setModifier(s);
+										}
+									}else if (modiff instanceof String){
+										keyboard.setModifier((String)modiff);
+									}
 									return keyboard;
 								}
 							}
