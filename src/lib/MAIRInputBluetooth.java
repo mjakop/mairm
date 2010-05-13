@@ -44,6 +44,9 @@ public class MAIRInputBluetooth extends MAIRInput {
 	private InputStream inputStream;
 	private OutputStream outputStream;
 	private BufferedReader bufferedReader;
+	private long startFrequencyMeasureTime=-1;
+	private int frequencyMeasureCount=0;
+	private long frequency=0;
 	
 	public MAIRInputBluetooth(String serviceName) {
 		this.serviceName=serviceName;
@@ -143,12 +146,32 @@ public class MAIRInputBluetooth extends MAIRInput {
 		}
 	}
 	
+	public long getInputFrequency() {
+		return frequency;
+	}
+	
+	private void calculateInputFrequency(){
+		if (startFrequencyMeasureTime==0){
+			startFrequencyMeasureTime=System.currentTimeMillis();
+		}else{
+			long diff=System.currentTimeMillis()-startFrequencyMeasureTime;
+			if (diff > 1000){
+				double freq=(double)(frequencyMeasureCount/(double)diff*1000.0);
+				frequency=Math.round(freq);
+				frequencyMeasureCount=0;
+				startFrequencyMeasureTime=System.currentTimeMillis();
+			}
+		}
+		frequencyMeasureCount++;
+	}
+	
 	@Override
 	public MAIRInputMessage get()  throws IOException {
 		String line=getBufferedReader().readLine();
 		if (line==null){
 			return null;
 		} else{
+			calculateInputFrequency();
 			//parse data
 			line=line.trim();
 			if (line.startsWith("{")){

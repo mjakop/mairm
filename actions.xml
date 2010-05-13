@@ -23,7 +23,7 @@
 		<action gesture="H">
 			<exec></exec>
 			<keys>
-				<key delayRelease="FALSE">F1</key>
+				<key delayRelease="TRUE">F1</key>
 			</keys>
 		</action>
 		<action gesture="KROG">
@@ -34,7 +34,7 @@
 		<action gesture="KROG_LEVO">
 			<exec></exec>
 			<keys>
-				<key delayRelease="FALSE">F1</key>
+				<key delayRelease="TRUE">F1</key>
 			</keys>
 		</action>
 		<action gesture="LEVO">
@@ -55,12 +55,12 @@
 		<action gesture="OMG">
 			<exec></exec>
 			<keys>
-				<key delayRelease="FALSE">WINDOWS</key>
-				<key delayRelease="TRUE">R</key>
-				<key delayRelease="TRUE">A</key>
-				<key delayRelease="TRUE">V</key>
-				<key delayRelease="TRUE">T</key>
-				<key delayRelease="TRUE">O</key>
+				<key delayRelease="TRUE">WINDOWS</key>
+				<key delayRelease="FALSE">R</key>
+				<key delayRelease="FALSE">A</key>
+				<key delayRelease="FALSE">V</key>
+				<key delayRelease="FALSE">T</key>
+				<key delayRelease="FALSE">O</key>
 			</keys>
 		</action>
 		<action gesture="S">
