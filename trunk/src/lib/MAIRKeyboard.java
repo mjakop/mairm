@@ -21,6 +21,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.HashMap;
 
+import com.sun.org.apache.xalan.internal.xsltc.cmdline.getopt.GetOpt;
+
 public class MAIRKeyboard {
 
 	private Robot robot;
@@ -263,7 +265,25 @@ public class MAIRKeyboard {
 	
 	
 	public void process(MAIRInputMessageKeyboard msg){
+		if(msg.isShiftDown()){
+			getRobot().keyPress(KeyEvent.VK_SHIFT);
+		}
+		if (msg.isAltDown()){
+			getRobot().keyPress(KeyEvent.VK_ALT);
+		}
+		if(msg.isControlDown()){
+			getRobot().keyPress(KeyEvent.VK_CONTROL);
+		}
 		getRobot().keyPress(msg.getKeyCode());
 		getRobot().keyRelease(msg.getKeyCode());
+		if(msg.isControlDown()){
+			getRobot().keyRelease(KeyEvent.VK_CONTROL);
+		}	
+		if (msg.isAltDown()){
+			getRobot().keyRelease(KeyEvent.VK_ALT);
+		}
+		if(msg.isShiftDown()){
+			getRobot().keyRelease(KeyEvent.VK_SHIFT);
+		}
 	}
 }

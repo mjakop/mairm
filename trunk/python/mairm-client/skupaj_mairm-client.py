@@ -84,6 +84,10 @@ def parse_string(text):
       char = u'DOUBLE QUOTE'
     elif char == u"'":
       char = u'QUOTE'
+    elif char == u",":
+      char = u'NUMPAD .'
+    elif char == u".":
+      char = u'NUMPAD ,'
     elif char.isupper():
       char = char.lower()
       modifiers += u'SHIFT'

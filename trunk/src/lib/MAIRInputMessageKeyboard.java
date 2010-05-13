@@ -59,6 +59,17 @@ public class MAIRInputMessageKeyboard extends MAIRInputMessage {
 		this.controlDown = controlDown;
 	}
 	
+	public void setModifier(String name){
+		name=name.toUpperCase();
+		if (name.equals("SHIFT")){
+			setShiftDown(true);
+		}else if (name.equals("CONTROL")){
+			setControlDown(true);
+		}else if (name.equals("ALT")) {
+			setAltDown(true);
+		}
+	}
+	
 	
 	
 }
