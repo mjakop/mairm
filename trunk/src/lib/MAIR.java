@@ -37,6 +37,10 @@ public class MAIR implements Runnable {
 	public void setInput(MAIRInput input) {
 		this.input = input;
 	}
+	
+	public MAIRInput getInput() {
+		return input;
+	}
 
 	/**
 	 * Use this to set up event listener for received messages. This can be used for drawing graphs.

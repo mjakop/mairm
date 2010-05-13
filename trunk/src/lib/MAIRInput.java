@@ -29,4 +29,5 @@ public abstract class MAIRInput extends MAIRObject {
 	public abstract void interruptWaiting();
 	public abstract InputStream getInputStream() throws IOException;
 	public abstract OutputStream getOutputStream() throws IOException;
+	public abstract long getInputFrequency();
 }

@@ -339,10 +339,12 @@ public class Main extends JFrame implements MAIREventListener, MAIRInputMessageL
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
+	}	
 	@Override
 	public void messageReceived(MAIRInputMessage msg) {
+		if (isVisible()){
+			setTitle("MAIRM working at "+m.getInput().getInputFrequency()+"Hz");
+		}
 		if (msg instanceof MAIRInputMessageMouse){
 			MAIRInputMessageMouse m=(MAIRInputMessageMouse)msg;
 			getGraphX().addPoint(m.getAccX());
