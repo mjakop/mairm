@@ -210,7 +210,7 @@ class Application:
     elif event['scancode'] == key_codes.EScancodeSelect:
       if self.mode != Mode.SCROLLING and event['type'] == appuifw.EEventKeyDown:
         self.mode = Mode.SGESTURE
-        self.sleeper.after(0.5, self.resume)
+        self.sleeper.after(0.2, self.resume)
       elif event['type'] == appuifw.EEventKeyUp:
         if self.mode == Mode.SGESTURE:
           self.sleeper.cancel()
@@ -254,7 +254,7 @@ class Application:
       pass
     
     self.locker.signal()
-
+  
 # Init sensors
 app = Application()
 
