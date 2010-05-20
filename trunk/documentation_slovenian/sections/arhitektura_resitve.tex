@@ -1,5 +1,7 @@
 \begin{center}\includegraphics[width=140mm]{images/arch.png}\end{center}
-Rešitev je zasnovana s pomoèjo principa strežnik-odjemalec. Vsak ima svoje funkcionalnosti, skupaj pa predstavljata delujoèo celoto. Na strežnikovi strani teèe MAIRM strežniška aplikacija. Njene naloge so:
+Rešitev je zasnovana s pomoèjo principa strežnik-odjemalec. Strežnik in odjemalec med sabo komunicirata preko MAIM protokola, ki je osnovan na JSON formatu ter je predstavljen v nadaljevanju poroèila.
+\newline\newline
+Na strežnikovi (raèunalnikovi) strani teèe MAIRM strežniška aplikacija. Njene naloge so:
 \begin{itemize}
 \item ustvari bluetooth service (z imenom MAIRM) preko katerega se MAIRM odjemalec poveže do same aplikacije,
 \item poskrbi za pravilno prepoznavo odjemalèevih akcij:
@@ -32,6 +34,8 @@ Na mobitelovi strani oziroma odjemalèevi strani teèe MAIRM odjemalèeva aplikacij
 		\item Scrolling mode,
 		\item Gesture mode
 	\end{itemize}
+\item izris uporabniškega vmesnika za touch screen telefone.
 \end{itemize}
+Obe komponenti sistema skupaj tvorita delujoèo osnova s katero se (lahko) doseže zastavljene zaèetne cilje.
 \subsection{MAIRM protokol}
 \input{sections/opis_protokola.tex}

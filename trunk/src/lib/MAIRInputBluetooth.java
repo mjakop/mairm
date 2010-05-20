@@ -225,7 +225,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 							}
 							return m;
 						} else if (jobj.containsKey("gesture")){
-							System.out.println(line);
+							//System.out.println(line);
 							JSONObject gObj=(JSONObject)jobj.get("gesture");
 							int x=doubleToInt((Double)gObj.get("x"),0);
 							int y=doubleToInt((Double)gObj.get("y"),0);
@@ -243,7 +243,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 							}
 							return m;
 						} else if(jobj.containsKey("keyboard")){
-							System.out.println(line);
+							//System.out.println(line);
 							JSONObject kObj=(JSONObject)jobj.get("keyboard");
 							String key=(String)kObj.get("keys");
 							if (key!=null){
@@ -271,26 +271,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 
 				}
 			}else{
-				try{
-					MAIRInputMessageGesture gesture;
-					if (line.startsWith("#")==false){
-						String[] parts=line.split(";");
-						int x=Integer.parseInt(parts[0]);
-						int y=Integer.parseInt(parts[1]);
-						int z=Integer.parseInt(parts[2]);
-						gesture=new MAIRInputMessageGesture(x,y,z);
-					} else{
-						gesture=new MAIRInputMessageGesture(0, 0, 0);
-					}
-					if (line.startsWith("#levDOL")){
-						gesture.setStartGesture(true);
-					} else if (line.startsWith("#levGOR")){
-						gesture.setEndGesture(true);				
-					}
-					return gesture;
-				}catch (Exception e) {
-				
-				}
+				System.out.println("OLD format not supported anymore.");
 			}
 			return new MAIRInputMessage();
 		}

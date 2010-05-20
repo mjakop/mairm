@@ -1,0 +1,84 @@
+Sama izvedba rešitve na prvi pogled izgleda èisto enostavna. Ko pa se zatopimo v delo in poskušamo rešitev dejansko izvesti, pa pridemo do razliènih problemov, ki jih je potrebno rešiti. Midva sva prišla do naslednjih problemov:
+\begin{enumerate}
+\item Vzpostavitev povezave med razliènimi napravami
+\item Pridobitev podatkov iz pospeškometra v mobilnem telefonu
+\item Simulacija delovanja miške in tipkovnice
+\item Uèenje in razpoznava kretenj
+\end{enumerate}
+Vse naštete probleme, ki so bolj podrobno opisani v nadaljevanju, sva uspešno rešila.
+
+\subsection{Pregled uporabniškega vmesnika}
+Uporabniški vmesnik kot tak se nama ni zdel bistven del zato mu nisva posveèala preveè pozornosti. Bolj sva se osredotoèila na samo ozadje rešitve.
+\subsubsection{Osnovno okno}
+\textbf{Osnovno okno, ki ga odbimo ob zagonu:}
+\begin{center}\includegraphics[width=140mm]{images/ui_main.png}\end{center}
+\textbf{Razširjeno okno za vnos/uèenje kretnje:} Raširjeno okno dobimo po kliku na temno sivi zavihek.
+\begin{center}\includegraphics[width=140mm]{images/ui_main_ext.png}\end{center}
+\subsubsection{Delovanje v ozadju}
+Po minimizaciji glavnega okno gre sistem v delovanje v ozadju. Ko je sistem v tem naèinu delovanja se na mestu poleg ure pojavi ikonca, ki predstavlja program.
+\begin{center}\includegraphics[width=40mm]{images/ui_main_back.png}\end{center}
+Ko se v sistem poveže telefon ikonca spremeni svojo barvo in s tem je ponazorjena uspešna povezava.
+\begin{center}\includegraphics[width=40mm]{images/ui_main_back_connected.png}\end{center}
+\subsubsection{Uporabniški vmesnik na mobilnem telefonu}
+Uporabniški vmesnik na mobilnem telefonu ni niè posebnega, saj po tem ni potrebe. Potrebno bistvo se skriva v ozadju.
+\subsection{Vzpostavitev povezave med razliènimi napravami}
+\subsubsection{Opis problema:}
+Imamo dve napravi, ki sta obe sposobni bluetooth komunikacije. Pri tem se pojavijo naslednja vprašanja:
+\begin{enumerate}
+\item Katera izmed naprav naj bo gospodar, ki prejema zahteve po povezavi od druge naprave?
+\item Kako programsko, hitro in èimbolj enostavno vzpostaviti povezavo s pogojem, da to deluje na vseh sistemih?
+\end{enumerate}
+
+\subsubsection{Opis rešitve:}
+
+\begin{enumerate}
+\item Ta problem sva rešila zelo enostavno. Ker je potrebno za delovanje sistema oziroma samo sporoèanje premikov telefona zagnati aplikacijo na mobilniku (predpostavljava, da je na raèunalniku že pognana), sva se odloèila, da naj bo mobilnik tisti, ki poda zahtevo po vzpostavitvi povezave. Tako je tudi rešeno, da ni potrebno aplikaciji na raèunalniku skenirati na okoli za napravami, ki imajo MAIRM sposobnost. S tem se prihrani nekaj tudi na energijski porabi (ki je sploh na prenosnih napravah kljuènega pomena), ker se povezava vzpostavlja in ostaja aktivna samo takrat, ko je dejansko potrebna.
+\item Naslednji problem je že bil malce težji. Težji iz vidika, da želiva to poèeti preko programskega jezika Java in to na vseh platformah. Po brskanju na spletu sva prišla do knjižnjice BlueCove, ki omogoèa toèno to kar potrebujeva. Potem je bilo potrebno samo še spoznati uporabo te knjižnjice in standard, ki je osnova implementacije. Konèna implemetacija povezave je bila rešene na sledeèi naèin: 
+	\begin{enumerate}
+		\item Strežniška aplikacija na raèunalniku ob zagonu kreira storitev z imenom MAIRM. Storitev teèe na vrhu protokola Bluetooth Serial Port Profile,
+		\item Uporabnik po zagonu MAIRM mobilne aplikacije dobi na voljo izbiro bluetooth naprave ter nato še izbiro storitve (v primeru, da bi bilo storitev veè ali pod razliènimi imeni)
+		\item Èe je vse pravilno storjeno, se komunikacija vzpostavi.
+	\end{enumerate}
+	\end{enumerate}
+
+\subsection{Pridobitev podatkov iz pospeškometra v mobilnem telefonu}
+\subsubsection{Opis problema:}
+Že od samega zaèetka sva vedela katere mobilne telefone bova uporabila pri najini seminarski nalogi. Preostala je le še izbira programskega jezika v katerem se je mogoèe dokopati do teh podatkov in kako to storiti v izbranem programskem jeziku.
+\subsubsection{Opis rešitve:}
+Za programiranje na Symbian platformi imamo na voljo naslednje programske jezike:
+\begin{itemize}
+	\item Java
+	\item C/C++
+	\item Python
+\end{itemize}
+Od vseh možnosti najprej odpade programski jezik Java, ker nima (še) dodanega aplikacijskega vmesnika do senzorjev, ki so v telefonu. Zaradi enostavnosti implementacije sva izbrala programski jezik Python, èeprav se v samem interpreterju jezika in dokumentaciji pojavljajo napake. Osnovna implementacija v Pythonu je naslednja: 
+\begin{enumerate}
+	\item uporabi razred sensor in mu podaj funkcijo/metodo za katero želiš, da se klièe ob dogodkih vzorèenja podatkov iz senzorja
+	\item v klicani metodi pošlji podatke na raèunalnik
+\end{enumerate}
+Ob tem velja omeniti, da je potrebno rešiti izgubljanje podatkov v primeru napake pri pošiljanju podatkov preko bluetooth vmesnika.
+
+\subsection{Simulacija delovanja miške in tipkovnice}
+\subsubsection{Opis problema:} Pri seminarski nalogi sva prišla do toèke, ko je bilo potrebno zaèeti simulirati delovanje miške in tipkovnice. Torej, želela sva programsko operacijskemu sistemu sporoèiti, da se je miška premaknila desno, da se je zgodil klik,....
+\subsubsection{Rešitev problema:} Sprva sva mislila, da bo v Javi to problem, ki ga bo potrebno reševati preko JNI (java native interface). Kar bi celotno implementacijo malce otežilo. Na sreèo sva prišla do spoznanja, da obstaja razred Robot, ki omogoèa vse kar sva potrebovala. Z razredom Robot je mogoèe:
+\begin{itemize}
+	\item Zajemati zaslonsko sliko,
+	\item Premikati miško,
+	\item Pritiskati tipke,
+	\item Izvajati drsenje po straneh(scrollanje)
+	\item ...
+\end{itemize}
+Dobra stvar tega razreda je tudi ta, da je že vsebovan v standardni Javi.
+
+\subsection{Uèenje in razpoznava kretenj}
+\subsubsection{Opis problema:} Iz prejetih podatkov, ki jih dobiva iz mobilnega telefona je bilo potrebno nekako zagotoviti, da bo sistem znal prepoznati, kaj je uporabnik izvedel. Npr. uporabnik v zraku nariše krog in sistem ga uspešno prepozna. Sprva se nama je problem zdel težek in ob enem zanimiv, kar je samo dal dodatno motivacijo za njegovo razrešitev.
+ 
+\subsubsection{Rešitev problema:}
+Problem sva želela rešiti na veè bolj ali manj uspešnih postopkov:
+\begin{enumerate}
+	\item \textbf{Poskus odkrivanje v katero izmed smeri se gibje telefon (gor, dol, levo, desno, postrani v levo...):} Delovanje sistema na tak naèin bi bilo bolj slabo, èeprav je v teoriji vsaj v enem delu izgledal obetavno (ne bi prišlo do napaènih detekcij, detekcija bi bila ali pa ne). Problem bi bil v tem, da bi težko prepoznaval krivulje ter, da bi bilo pri izvajanju potrebno zagotoviti ostre prehode med posameznimi smermi (uporabnik bi moral delat zelo nazorne gibe).
+	\item \textbf{Uporaba algoritma strojnega uèenja k-nearest neighbours:} Idejo za ta algoritem sva dobila po pregledu diplomske naloge študenta iz naše fakultete. Dodatno motivacijo za uporabo sledeèega algoritma sva dobila še zaradi zelo dobrih rezultatov prepoznavanja, ki jih je dosegel pri svojem delu. 
+\end{enumerate}
+
+Torej za rešitev problema uèenja in razpoznave kretenj sva izbrala algoritem strojnega uèenja k-nearest neighbours. Edina slabost te izbire je, da algoritem ni med najhitrejšimi pri sami razpoznavi. Vzrok tega je, da se sistem ne uèi ampak šele pri razpoznavi poskuša klasificirati kateremu razredu (kretnji) pripada nek seznam vrednosti. Kljub temu, se nama je zdel dobra naložba. Sam algoritem pri svojem delovanju uporablja raèunanje razdalje med dvema zaporedjema. Ker se vrednosti pri izvajanju kretnje lahko èasovno razlikujejo (nek gib ne izvedemo vedno èasovno èisto enako) sva za merjenje razdalje uporabila algoritem DTW (dynamic time warp). Osnovna implementacija obeh algoritmov je dokaj enostavna, a poèasna. Èe bi želela hitro implementacijo bi bilo potrebno precej veè dela za dosego spodnje meje implementacije. Zato sva raje uporabila že obstojeèo rešitev s tega podroèja, in sicer implementacijo v java programski knjižnjici JML (java machine learning). Po preuèitvi uporabe knjižnjice je bil problem rešen.
+
