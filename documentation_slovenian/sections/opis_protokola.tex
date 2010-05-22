@@ -12,7 +12,15 @@ modifiers = SHIFT in/ali ALT in/ali CONTROL
 \subsubsection{Format za GESTURE mode}
 \textbf{Oblika:}
 \begin{lstlisting}[caption=Oblika formata za GESTURE mode]
-{"gesture":{"x":"double","y":"double","z":" double ","start":"boolean","end":"boolean"}}
+{
+   "gesture":{
+      "x":"double",
+      "y":"double",
+      "z":" double ",
+      "start":"boolean",
+      "end":"boolean"
+   }
+}
 \end{lstlisting}
 \textbf{Razlaga:}\newline
 x = vrednost akselometra po x-osi. \newline
@@ -30,7 +38,16 @@ Privzeta vrednost: false
 \subsubsection{Format za MOUSE mode}
 \textbf{Oblika:}
 \begin{lstlisting}[caption=Oblika formata za MOUSE mode]
-{"mouse":{"x":"double","y":"double","z":"double","leftbutton":"buttonState","middlebutton":"buttonStateMiddle","rightbutton":"buttonState"}}
+{
+   "mouse":{
+      "x":"double",
+      "y":"double",
+      "z":"double",
+      "leftbutton":"buttonState",
+      "middlebutton":"buttonStateMiddle",
+      "rightbutton":"buttonState"
+   }
+}
 \end{lstlisting}
 \textbf{Razlaga:}\newline
 x = vrednost akselometra po x-osi. \newline
@@ -49,7 +66,14 @@ Privzeta vrednost: up\newline
 \subsubsection{Format za KEYBOARD mode}
 \textbf{Oblika:}
 \begin{lstlisting}[caption=Oblika formata za KEYBOARD mode]
-{"keyboard": {"key":"keys","modifiers":[modifiers]}} 
+{
+   "keyboard":{
+      "key":"keys",
+      "modifiers":[
+         "modifiers"
+      ]
+   }
+}
 \end{lstlisting}
 \textbf{Razlaga:}\newline
 key = tipka, ki naj bi bila pritisnjena na raèunalniški tipkovnici. Posebni znaki morajo biti zapisani s 

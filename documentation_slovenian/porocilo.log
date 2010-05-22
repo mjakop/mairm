@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.9)  18 MAY 2010 16:03
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2010.5.9)  22 MAY 2010 19:54
 entering extended mode
 **porocilo
 (D:\Programiranje\java\MAIRM\documentation_slovenian\porocilo.tex
@@ -286,91 +286,91 @@ Underfull \hbox (badness 10000) in paragraph at lines 3--11
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 15.
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 17--28
+Underfull \hbox (badness 10000) in paragraph at lines 25--36
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 17--28
+Underfull \hbox (badness 10000) in paragraph at lines 25--36
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 17--28
+Underfull \hbox (badness 10000) in paragraph at lines 25--36
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 17--28
+Underfull \hbox (badness 10000) in paragraph at lines 25--36
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 17--28
+Underfull \hbox (badness 10000) in paragraph at lines 25--36
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--48
+Underfull \hbox (badness 10000) in paragraph at lines 52--65
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--48
+Underfull \hbox (badness 10000) in paragraph at lines 52--65
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--48
+Underfull \hbox (badness 10000) in paragraph at lines 52--65
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--48
+Underfull \hbox (badness 10000) in paragraph at lines 52--65
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--48
+Underfull \hbox (badness 10000) in paragraph at lines 52--65
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--48
+Underfull \hbox (badness 10000) in paragraph at lines 52--65
 
  []
 
 [5]))
 (D:\Programiranje\java\MAIRM\documentation_slovenian\sections/izvedba_resitve_p
-roblemi.tex <images/ui_main.png, id=28, 427.5975pt x 644.4075pt>
+roblemi.tex [6] <images/ui_main.png, id=32, 427.5975pt x 644.4075pt>
 File: images/ui_main.png Graphic file (type png)
 
-<use images/ui_main.png> [6]
-<images/ui_main_ext.png, id=33, 828.09375pt x 643.40375pt>
+<use images/ui_main.png> [7]
+<images/ui_main_ext.png, id=36, 828.09375pt x 643.40375pt>
 File: images/ui_main_ext.png Graphic file (type png)
 
-<use images/ui_main_ext.png> [7 <D:/Programiranje/java/MAIRM/documentation_slov
+<use images/ui_main_ext.png> [8 <D:/Programiranje/java/MAIRM/documentation_slov
 enian/images/ui_main.png (PNG copy)>]
-<images/ui_main_back.png, id=37, 124.465pt x 32.12pt>
+<images/ui_main_back.png, id=40, 124.465pt x 32.12pt>
 File: images/ui_main_back.png Graphic file (type png)
 
 <use images/ui_main_back.png>
-<images/ui_main_back_connected.png, id=38, 122.4575pt x 32.12pt>
+<images/ui_main_back_connected.png, id=41, 122.4575pt x 32.12pt>
 File: images/ui_main_back_connected.png Graphic file (type png)
 
-<use images/ui_main_back_connected.png> [8 <D:/Programiranje/java/MAIRM/documen
+<use images/ui_main_back_connected.png> [9 <D:/Programiranje/java/MAIRM/documen
 tation_slovenian/images/ui_main_ext.png (PNG copy)> <D:/Programiranje/java/MAIR
 M/documentation_slovenian/images/ui_main_back.png (PNG copy)> <D:/Programiranje
 /java/MAIRM/documentation_slovenian/images/ui_main_back_connected.png (PNG copy
 )>]
-Overfull \hbox (10.18698pt too wide) in paragraph at lines 37--38
+Overfull \hbox (10.18698pt too wide) in paragraph at lines 38--39
 []\OT1/cmr/m/n/12 Strezniska ap-likacija na racunalniku ob zagonu kreira sto
 ritev z imenom MAIRM.
  []
 
-[9] [10])
+[10] [11])
 (D:\Programiranje\java\MAIRM\documentation_slovenian\sections/nadaljnje_delo.te
-x) [11]
+x) [12]
 (D:\Programiranje\java\MAIRM\documentation_slovenian\sections/navodila_za_upora
 bo.tex
 Overfull \hbox (3.49275pt too wide) in paragraph at lines 26--27
@@ -378,16 +378,16 @@ Overfull \hbox (3.49275pt too wide) in paragraph at lines 26--27
  pro-gramom) oziroma
  []
 
-[12] [13] [14]) [15] [16]
+[13] [14] [15]) [16] [17]
 (D:\Programiranje\java\MAIRM\documentation_slovenian\porocilo.aux) ) 
 Here is how much of TeX's memory you used:
- 3999 strings out of 495285
- 57000 string characters out of 3180341
- 160301 words of memory out of 3000000
- 7136 multiletter control sequences out of 15000+200000
+ 3997 strings out of 495285
+ 56972 string characters out of 3180341
+ 166301 words of memory out of 3000000
+ 7134 multiletter control sequences out of 15000+200000
  8201 words of font info for 29 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 33i,6n,49p,1083b,1699s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 33i,7n,49p,1083b,1691s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program
  Files/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/M
 iKTeX 2.8/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.
@@ -395,9 +395,9 @@ iKTeX 2.8/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.
 ype1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.8/fonts/type1/publ
 ic/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX 2.8/fonts/type1/public/amsfon
 ts/cm/cmsy10.pfb>
-Output written on porocilo.pdf (17 pages, 264124 bytes).
+Output written on porocilo.pdf (18 pages, 267588 bytes).
 PDF statistics:
- 88 PDF objects out of 1000 (max. 8388607)
+ 91 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 
