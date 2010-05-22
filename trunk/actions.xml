@@ -1,75 +1,24 @@
 <MAIRM>
 	<actions>
-		<action gesture="/">
-			<exec>sa</exec>
-			<keys>
-			</keys>
-		</action>
 		<action gesture="DESNO">
-			<exec>next.exe</exec>
-			<keys>
-			</keys>
-		</action>
-		<action gesture="DOL">
-			<exec>sa</exec>
-			<keys>
-			</keys>
-		</action>
-		<action gesture="FIREFOX">
-			<exec>C:\Program Files\Mozilla Firefox\firefox.exe</exec>
-			<keys>
-			</keys>
-		</action>
-		<action gesture="H">
 			<exec></exec>
 			<keys>
-				<key delayRelease="FALSE">F1</key>
 			</keys>
 		</action>
-		<action gesture="KROG">
-			<exec>stop.exe</exec>
-			<keys>
-			</keys>
-		</action>
-		<action gesture="KROG_LEVO">
+		<action gesture="KILL">
 			<exec></exec>
 			<keys>
-				<key delayRelease="FALSE">F1</key>
+				<key delayRelease="FALSE">ALT</key>
+				<key delayRelease="TRUE">F4</key>
 			</keys>
 		</action>
 		<action gesture="LEVO">
-			<exec>prev.exe</exec>
-			<keys>
-			</keys>
-		</action>
-		<action gesture="LUKA">
-			<exec>winamp.exe</exec>
-			<keys>
-			</keys>
-		</action>
-		<action gesture="NAPREJ">
-			<exec>sa</exec>
-			<keys>
-			</keys>
-		</action>
-		<action gesture="OMG">
 			<exec></exec>
 			<keys>
-				<key delayRelease="FALSE">WINDOWS</key>
-				<key delayRelease="TRUE">R</key>
-				<key delayRelease="TRUE">A</key>
-				<key delayRelease="TRUE">V</key>
-				<key delayRelease="TRUE">T</key>
-				<key delayRelease="TRUE">O</key>
 			</keys>
 		</action>
-		<action gesture="S">
-			<exec>play.exe</exec>
-			<keys>
-			</keys>
-		</action>
-		<action gesture="W">
-			<exec>sa</exec>
+		<action gesture="N">
+			<exec>c:\windows\notepad.exe</exec>
 			<keys>
 			</keys>
 		</action>
