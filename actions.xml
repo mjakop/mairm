@@ -1,25 +1,61 @@
 <MAIRM>
 	<actions>
+		<action gesture="CLOSE">
+			<exec></exec>
+			<keys>
+				<key delayRelease="TRUE">ALT</key>
+				<key delayRelease="FALSE">F4</key>
+			</keys>
+		</action>
+		<action gesture="DELETE">
+			<exec></exec>
+			<keys>
+				<key delayRelease="FALSE">DELETE</key>
+			</keys>
+		</action>
 		<action gesture="DESNO">
 			<exec></exec>
 			<keys>
-			</keys>
-		</action>
-		<action gesture="KILL">
-			<exec></exec>
-			<keys>
-				<key delayRelease="FALSE">ALT</key>
-				<key delayRelease="TRUE">F4</key>
+				<key delayRelease="FALSE">RIGHT</key>
 			</keys>
 		</action>
 		<action gesture="LEVO">
 			<exec></exec>
 			<keys>
+				<key delayRelease="FALSE">RIGHT</key>
 			</keys>
 		</action>
 		<action gesture="N">
 			<exec>c:\windows\notepad.exe</exec>
 			<keys>
+			</keys>
+		</action>
+		<action gesture="O">
+			<exec></exec>
+			<keys>
+				<key delayRelease="TRUE">CTRL</key>
+				<key delayRelease="FALSE">A</key>
+			</keys>
+		</action>
+		<action gesture="Z">
+			<exec></exec>
+			<keys>
+				<key delayRelease="FALSE">P</key>
+				<key delayRelease="FALSE">O</key>
+				<key delayRelease="FALSE">Z</key>
+				<key delayRelease="FALSE">D</key>
+				<key delayRelease="FALSE">R</key>
+				<key delayRelease="FALSE">A</key>
+				<key delayRelease="FALSE">V</key>
+				<key delayRelease="FALSE">SPACE</key>
+				<key delayRelease="FALSE">O</key>
+				<key delayRelease="FALSE">D</key>
+				<key delayRelease="FALSE">SPACE</key>
+				<key delayRelease="FALSE">M</key>
+				<key delayRelease="FALSE">A</key>
+				<key delayRelease="FALSE">I</key>
+				<key delayRelease="FALSE">R</key>
+				<key delayRelease="FALSE">M</key>
 			</keys>
 		</action>
 	</actions>

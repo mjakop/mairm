@@ -126,7 +126,7 @@ public class GestureDetectedActions {
 					for(int j=0;j<item.getKeys().size();j++){
 						GestureDetectedActionKey k=item.getKeys().get(j);
 						String delayRelease="FALSE";
-						if (k.isImediatellyRelease()){
+						if (k.isImediatellyRelease()==false){
 							delayRelease="TRUE";
 						}
 						buff.append("\t\t\t\t<key delayRelease=\""+delayRelease+"\">");
