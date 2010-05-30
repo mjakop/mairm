@@ -271,6 +271,7 @@ public class MAIRInputBluetooth extends MAIRInput {
 
 				}
 			}else{
+				System.out.println(line);
 				System.out.println("OLD format not supported anymore.");
 			}
 			return new MAIRInputMessage();
